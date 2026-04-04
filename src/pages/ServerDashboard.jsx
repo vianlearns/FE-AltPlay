@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 export default function ServerDashboard() {
   const [serverState, setServerState] = useState('ONLINE'); // 'ONLINE', 'OFFLINE', 'STARTING'
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [logs, setLogs] = useState([
     { time: '14:32:01', level: 'INFO', msg: 'Memuat properti', color: 'emerald-400' },
     { time: '14:32:01', level: 'INFO', msg: 'Default gametype: SURVIVAL', color: 'emerald-400' },
@@ -14,7 +15,7 @@ export default function ServerDashboard() {
   const handleCommand = (e) => {
     e.preventDefault();
     if (!consoleInput.trim()) return;
-    
+
     const newLog = {
       time: new Date().toLocaleTimeString('id-ID', { hour12: false }).substring(0, 8),
       level: 'COMMAND',
@@ -42,17 +43,29 @@ export default function ServerDashboard() {
   };
 
   return (
-    <div className="bg-surface text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container flex">
+    <div className="bg-surface text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container flex min-h-screen relative overflow-hidden">
+      
+      {/* Mobile Drawer Overlay */}
+      {isSidebarOpen && (
+        <div 
+          className="lg:hidden fixed inset-0 bg-[#0a0a0a]/80 backdrop-blur-sm z-40 transition-opacity"
+          onClick={() => setIsSidebarOpen(false)}
+        />
+      )}
+
       {/* SideNavBar Component */}
-      <aside className="h-screen w-64 fixed left-0 top-0 bg-[#1c1b1b] flex flex-col py-8 gap-4 z-40 border-r border-white/5">
-        <div className="px-6 mb-8 flex justify-center">
+      <aside className={`h-screen w-64 fixed left-0 top-0 bg-[#1c1b1b] flex flex-col py-8 gap-4 z-50 border-r border-white/5 transition-transform duration-300 ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}>
+        <div className="px-6 mb-8 flex justify-between lg:justify-center items-center">
           <a href="/" className="hover:brightness-110 transition-all">
             <img src="/ALTPLAY-logo.png" alt="ALTPLAY" className="h-8 w-auto" />
           </a>
+          <button className="lg:hidden text-zinc-400 hover:text-white" onClick={() => setIsSidebarOpen(false)}>
+            <span className="material-symbols-outlined">close</span>
+          </button>
         </div>
         <div className="px-4 mb-6">
           <div className="flex items-center gap-3 p-3 rounded-xl bg-surface-container-high/50 border border-white/5">
-            <div className={`w-10 h-10 rounded-lg flex items-center justify-center overflow-hidden transition-colors ${serverState === 'ONLINE' ? 'bg-primary-container' : 'bg-surface-container-highest'}`}>
+            <div className={`w-10 h-10 min-w-10 rounded-lg flex items-center justify-center overflow-hidden transition-colors ${serverState === 'ONLINE' ? 'bg-primary-container' : 'bg-surface-container-highest'}`}>
               <img alt="User Server Avatar" className={`w-full h-full object-cover ${serverState !== 'ONLINE' && 'grayscale opacity-50'}`} src="https://lh3.googleusercontent.com/aida-public/AB6AXuDHkIBC-IdicCZ9Q6e0qXodbEsvvFvDIdv-xto1Dlca_5hcmD7anxsJm3pWMM13sf_xKZ5U85VkjnhMpa-OviyGe1QO3aeO7_SG_QfeuFpFYuVENa0iozDQ4zbb-g3PNTI46LX93ugWF3RPRLiHjk-Eu_FgUbYEn5XzsZSz2IpvLEhP1rRI-tdhQ6e1SxadujHsBpZjiHBZ_9xIQGDrIHiCWdAhHhGStadC38JJC65NgQLJ9uXPic0EPMkLoCfmhWMy1ATihiUmVJGM" />
             </div>
             <div className="flex flex-col overflow-hidden">
@@ -64,26 +77,25 @@ export default function ServerDashboard() {
           </div>
         </div>
         <nav className="flex-1 flex flex-col gap-1 px-4">
-          {/* Active State: Console */}
-          <a className="flex items-center gap-3 px-4 py-3 bg-sky-500/10 text-sky-400 border-r-2 border-sky-400 font-body text-sm font-medium transition-transform hover:translate-x-1" href="#console">
+          <a className="flex items-center gap-3 px-4 py-3 bg-sky-500/10 text-sky-400 border-r-2 border-sky-400 font-body text-sm font-medium transition-transform hover:translate-x-1" href="#console" onClick={() => setIsSidebarOpen(false)}>
             <span className="material-symbols-outlined text-xl">terminal</span>
             <span>Konsol</span>
           </a>
-          <a className="flex items-center gap-3 px-4 py-3 text-zinc-500 hover:text-zinc-100 hover:bg-white/5 transition-all duration-300 rounded-lg" href="#files">
+          <a className="flex items-center gap-3 px-4 py-3 text-zinc-500 hover:text-zinc-100 hover:bg-white/5 transition-all duration-300 rounded-lg" href="#files" onClick={() => setIsSidebarOpen(false)}>
             <span className="material-symbols-outlined text-xl">folder_open</span>
             <span className="font-body text-sm font-medium">File</span>
           </a>
-          <a className="flex items-center gap-3 px-4 py-3 text-zinc-500 hover:text-zinc-100 hover:bg-white/5 transition-all duration-300 rounded-lg" href="#database">
+          <a className="flex items-center gap-3 px-4 py-3 text-zinc-500 hover:text-zinc-100 hover:bg-white/5 transition-all duration-300 rounded-lg" href="#database" onClick={() => setIsSidebarOpen(false)}>
             <span className="material-symbols-outlined text-xl">database</span>
             <span className="font-body text-sm font-medium">Database</span>
           </a>
-          <a className="flex items-center gap-3 px-4 py-3 text-zinc-500 hover:text-zinc-100 hover:bg-white/5 transition-all duration-300 rounded-lg" href="#history">
+          <a className="flex items-center gap-3 px-4 py-3 text-zinc-500 hover:text-zinc-100 hover:bg-white/5 transition-all duration-300 rounded-lg" href="#history" onClick={() => setIsSidebarOpen(false)}>
             <span className="material-symbols-outlined text-xl">history</span>
             <span className="font-body text-sm font-medium">Backup</span>
           </a>
         </nav>
         <div className="mt-auto px-4 flex flex-col gap-2">
-          <a href="/pricing" className="w-full py-3 px-4 bg-primary-container text-on-primary-container font-headline font-bold text-[11px] text-center block uppercase tracking-widest rounded-lg hover:brightness-110 active:scale-95 transition-all shadow-[0_0_15px_rgba(0,209,255,0.2)]">
+          <a href="/harga" className="w-full py-3 px-4 bg-primary-container text-on-primary-container font-headline font-bold text-[11px] text-center block uppercase tracking-widest rounded-lg hover:brightness-110 active:scale-95 transition-all shadow-[0_0_15px_rgba(0,209,255,0.2)]">
             Upgrade Node
           </a>
           <div className="h-px bg-white/5 my-2"></div>
@@ -95,51 +107,53 @@ export default function ServerDashboard() {
       </aside>
 
       {/* Main Content Canvas */}
-      <main className="ml-64 flex-1 min-h-screen bg-surface relative flex flex-col">
+      <main className="w-full lg:ml-64 flex-1 min-h-screen bg-surface relative flex flex-col">
         {/* Tonal Depth Background Texture */}
         <div className="absolute inset-0 pointer-events-none opacity-5 mix-blend-overlay max-h-[800px]" style={{ backgroundImage: "url('https://lh3.googleusercontent.com/aida-public/AB6AXuDzle91YbtzH7bVH1J-qYOJ_PCVDS8WjQAs-fo9DyHht62CtrvAVNVQaSklPblJ72OQ-KcQ5DkXgdANUisu5ssrocmGHfsIil8BQV51VwxTSNUUwCKoCt7y1y3qw0iwUYiUGx0XaHFYlhAHv1PnKSgFssWSSAuTEetaMT5UNDnVHqXE5a8H5pUiY5y3YwQOZ4zvDg2eS2Kh7w5zytT1Z0HJrz2sNnCpUwsx08EEZzlmelZMnQkIAIQHj1xJJ7jgOMiPKxFjvoeaLKLM')" }}></div>
         <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-primary-container/10 rounded-full blur-[160px] -translate-y-1/2 translate-x-1/2 z-0"></div>
-        
+
         {/* Top Header Navigation (Integrated) */}
-        <header className="sticky top-0 z-30 bg-[#131313]/80 backdrop-blur-md px-8 py-4 border-b border-white/5 flex flex-wrap gap-4 justify-between items-center">
-          <div className="flex items-center gap-4">
-            <h1 className="font-headline font-black text-2xl tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-cyan-400 uppercase">KONSOL</h1>
-            <div className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-widest border transition-colors ${
-              serverState === 'ONLINE' ? 'bg-secondary-container/10 border-secondary-fixed-dim/20 text-secondary-fixed-dim' : 
-              serverState === 'STARTING' ? 'bg-amber-500/10 border-amber-500/20 text-amber-500' : 
-              'bg-red-500/10 border-red-500/20 text-red-500'
-            }`}>
+        <header className="sticky top-0 z-30 bg-[#131313]/80 backdrop-blur-md px-4 md:px-8 py-4 border-b border-white/5 flex flex-wrap gap-4 justify-between items-center">
+          <div className="flex items-center gap-3 lg:gap-4">
+            <button className="lg:hidden p-2 -ml-2 text-zinc-400 hover:text-white" onClick={() => setIsSidebarOpen(true)}>
+              <span className="material-symbols-outlined">menu</span>
+            </button>
+            <h1 className="font-headline font-black text-xl lg:text-2xl tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-cyan-400 uppercase">KONSOL</h1>
+            <div className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-widest border transition-colors ${serverState === 'ONLINE' ? 'bg-secondary-container/10 border-secondary-fixed-dim/20 text-secondary-fixed-dim' :
+                serverState === 'STARTING' ? 'bg-amber-500/10 border-amber-500/20 text-amber-500' :
+                  'bg-red-500/10 border-red-500/20 text-red-500'
+              }`}>
               {serverState}
             </div>
           </div>
-          <div className="flex items-center gap-6">
-            <div className="flex items-center gap-2 p-1 bg-surface-container-lowest rounded-xl border border-white/5">
-              <button onClick={startServer} disabled={serverState !== 'OFFLINE'} className="flex items-center gap-2 px-4 py-2 rounded-lg bg-secondary-fixed-dim text-black font-headline font-bold text-xs uppercase tracking-tighter hover:brightness-110 transition-all active:scale-95 disabled:opacity-50 disabled:grayscale">
+          <div className="flex items-center gap-6 w-full sm:w-auto overflow-x-auto pb-2 sm:pb-0">
+            <div className="flex items-center gap-2 p-1 bg-surface-container-lowest rounded-xl border border-white/5 min-w-max">
+              <button onClick={startServer} disabled={serverState !== 'OFFLINE'} className="flex items-center gap-2 px-3 lg:px-4 py-2 rounded-lg bg-secondary-fixed-dim text-black font-headline font-bold text-xs uppercase tracking-tighter hover:brightness-110 transition-all active:scale-95 disabled:opacity-50 disabled:grayscale">
                 <span className="material-symbols-outlined text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>play_arrow</span> Start
               </button>
-              <button onClick={() => { stopServer(); setTimeout(startServer, 1000); }} disabled={serverState === 'OFFLINE'} className="flex items-center gap-2 px-4 py-2 rounded-lg bg-surface-container-high text-on-surface font-headline font-bold text-xs uppercase tracking-tighter hover:bg-surface-container-highest transition-all active:scale-95 disabled:opacity-50">
+              <button onClick={() => { stopServer(); setTimeout(startServer, 1000); }} disabled={serverState === 'OFFLINE'} className="flex items-center gap-2 px-3 lg:px-4 py-2 rounded-lg bg-surface-container-high text-on-surface font-headline font-bold text-xs uppercase tracking-tighter hover:bg-surface-container-highest transition-all active:scale-95 disabled:opacity-50">
                 <span className="material-symbols-outlined text-sm">refresh</span> Restart
               </button>
-              <button onClick={stopServer} disabled={serverState === 'OFFLINE'} className="flex items-center gap-2 px-4 py-2 rounded-lg bg-red-600 text-white font-headline font-bold text-xs uppercase tracking-tighter hover:bg-red-500 transition-all active:scale-95 shadow-[0_0_15px_rgba(220,38,38,0.3)] disabled:opacity-50 disabled:shadow-none">
+              <button onClick={stopServer} disabled={serverState === 'OFFLINE'} className="flex items-center gap-2 px-3 lg:px-4 py-2 rounded-lg bg-red-600 text-white font-headline font-bold text-xs uppercase tracking-tighter hover:bg-red-500 transition-all active:scale-95 shadow-[0_0_15px_rgba(220,38,38,0.3)] disabled:opacity-50 disabled:shadow-none">
                 <span className="material-symbols-outlined text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>stop</span> Stop
               </button>
             </div>
           </div>
         </header>
 
-        <section className="p-8 max-w-[1600px] w-full mx-auto space-y-8 relative z-10 flex-grow">
+        <section className="p-4 md:p-8 max-w-[1600px] w-full mx-auto space-y-6 md:space-y-8 relative z-10 flex-grow">
           {/* Metrics Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 md:gap-6">
             {/* CPU Usage */}
-            <div className="glass-panel p-6 rounded-2xl border border-white/5 shadow-xl group hover:border-sky-500/30 transition-all duration-500">
+            <div className="glass-panel p-5 md:p-6 rounded-2xl border border-white/5 shadow-xl group hover:border-sky-500/30 transition-all duration-500">
               <div className="flex justify-between items-start mb-4">
                 <div className="flex flex-col">
                   <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">CPU Usage</span>
-                  <span className="text-3xl font-headline font-black text-sky-400 tracking-tighter">{serverState === 'ONLINE' ? '42.8%' : '0.0%'}</span>
+                  <span className="text-2xl md:text-3xl font-headline font-black text-sky-400 tracking-tighter">{serverState === 'ONLINE' ? '42.8%' : '0.0%'}</span>
                 </div>
                 <span className="material-symbols-outlined text-sky-400/40">memory</span>
               </div>
-              <div className="h-16 flex items-end gap-1 opacity-80">
+              <div className="h-12 md:h-16 flex items-end gap-1 opacity-80 mt-4 md:mt-0">
                 <div className={`flex-1 bg-sky-500/20 rounded-t-sm transition-all duration-500 ${serverState === 'ONLINE' ? 'h-[30%]' : 'h-1'}`}></div>
                 <div className={`flex-1 bg-sky-500/40 rounded-t-sm transition-all duration-500 delay-75 ${serverState === 'ONLINE' ? 'h-[60%]' : 'h-1'}`}></div>
                 <div className={`flex-1 bg-sky-500/60 rounded-t-sm transition-all duration-500 delay-100 ${serverState === 'ONLINE' ? 'h-[45%]' : 'h-1'}`}></div>
@@ -147,163 +161,102 @@ export default function ServerDashboard() {
               </div>
             </div>
             {/* RAM Usage */}
-            <div className="glass-panel p-6 rounded-2xl border border-white/5 shadow-xl group hover:border-cyan-500/30 transition-all duration-500">
+            <div className="glass-panel p-5 md:p-6 rounded-2xl border border-white/5 shadow-xl group hover:border-cyan-500/30 transition-all duration-500">
               <div className="flex justify-between items-start mb-4">
                 <div className="flex flex-col">
                   <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">RAM Usage</span>
-                  <span className="text-3xl font-headline font-black text-cyan-400 tracking-tighter">{serverState === 'ONLINE' ? '6.2' : '0'} <span className="text-lg text-zinc-500">/ 16GB</span></span>
+                  <span className="text-2xl md:text-3xl font-headline font-black text-cyan-400 tracking-tighter">{serverState === 'ONLINE' ? '6.2' : '0'} <span className="text-sm md:text-lg text-zinc-500">/ 16GB</span></span>
                 </div>
                 <span className="material-symbols-outlined text-cyan-400/40">developer_board</span>
               </div>
-              <div className="w-full bg-surface-container-lowest h-2 rounded-full overflow-hidden mt-8">
+              <div className="w-full bg-surface-container-lowest h-2 rounded-full overflow-hidden mt-6 md:mt-8">
                 <div className={`h-full bg-gradient-to-r from-cyan-600 to-cyan-400 relative transition-all duration-1000 ${serverState === 'ONLINE' ? 'w-[38%]' : 'w-[0%]'}`}></div>
               </div>
             </div>
             {/* Disk Usage */}
-            <div className="glass-panel p-6 rounded-2xl border border-white/5 shadow-xl group hover:border-emerald-500/30 transition-all duration-500">
+            <div className="glass-panel p-5 md:p-6 rounded-2xl border border-white/5 shadow-xl group hover:border-teal-500/30 transition-all duration-500">
               <div className="flex justify-between items-start mb-4">
                 <div className="flex flex-col">
-                  <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Storage</span>
-                  <span className="text-3xl font-headline font-black text-secondary-fixed-dim tracking-tighter">14.9 GB</span>
+                  <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Storage (NVMe)</span>
+                  <span className="text-2xl md:text-3xl font-headline font-black text-teal-400 tracking-tighter">18.4 <span className="text-sm md:text-lg text-zinc-500">/ 100GB</span></span>
                 </div>
-                <span className="material-symbols-outlined text-emerald-400/40">storage</span>
+                <span className="material-symbols-outlined text-teal-400/40">dns</span>
               </div>
-              <div className="flex justify-between text-[10px] text-zinc-500 font-bold mt-8 uppercase tracking-widest">
-                <span>SSD NVMe Gen 4</span>
-                <span className="text-secondary-fixed-dim">HEALTHY</span>
+              <div className="w-full bg-surface-container-lowest h-2 rounded-full overflow-hidden mt-6 md:mt-8">
+                <div className="h-full bg-gradient-to-r from-teal-600 to-teal-400 w-[18%] relative transition-all duration-1000"></div>
               </div>
             </div>
-            {/* Network */}
-            <div className="glass-panel p-6 rounded-2xl border border-white/5 shadow-xl group hover:border-primary-container/30 transition-all duration-500">
+            {/* Network Traffic */}
+            <div className="glass-panel p-5 md:p-6 rounded-2xl border border-white/5 shadow-xl group hover:border-indigo-500/30 transition-all duration-500">
               <div className="flex justify-between items-start mb-4">
                 <div className="flex flex-col">
                   <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Network Out</span>
-                  <span className="text-3xl font-headline font-black text-on-surface tracking-tighter">{serverState === 'ONLINE' ? '124' : '0'} <span className="text-lg text-zinc-500 font-medium">Mb/s</span></span>
+                  <span className="text-2xl md:text-3xl font-headline font-black text-indigo-400 tracking-tighter">{serverState === 'ONLINE' ? '12.5' : '0.0'} <span className="text-sm md:text-lg text-zinc-500">Mbps</span></span>
                 </div>
-                <span className="material-symbols-outlined text-zinc-400/40">router</span>
+                <span className="material-symbols-outlined text-indigo-400/40">cell_tower</span>
               </div>
-              <div className={`mt-4 flex items-center gap-2 transition-opacity ${serverState === 'ONLINE' ? 'opacity-100' : 'opacity-30'}`}>
-                <div className="w-2 h-2 rounded-full bg-secondary-fixed-dim shadow-[0_0_10px_rgba(0,227,131,0.5)]"></div>
-                <span className="text-xs font-medium text-zinc-400">Koneksi Stabil</span>
+              <div className="flex items-center gap-2 mt-6 md:mt-8 text-xs text-zinc-400">
+                <span className="material-symbols-outlined text-sm text-emerald-500">arrow_downward</span> 2.1 Mbps In
               </div>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 xl:grid-cols-3 gap-8 items-start">
-            {/* Console Window */}
-            <div className="xl:col-span-2 flex flex-col h-[600px] bg-surface-container-lowest rounded-2xl border border-white/5 shadow-2xl overflow-hidden">
-              <div className="flex items-center justify-between px-6 py-4 bg-surface-container-low border-b border-white/5">
-                <div className="flex items-center gap-3">
-                  <div className="flex gap-2">
-                    <div className="w-3.5 h-3.5 rounded-full bg-red-500/80 shadow-[0_0_8px_rgba(239,68,68,0.5)] cursor-pointer hover:bg-red-400"></div>
-                    <div className="w-3.5 h-3.5 rounded-full bg-amber-500/80 shadow-[0_0_8px_rgba(245,158,11,0.5)] cursor-pointer hover:bg-amber-400"></div>
-                    <div className="w-3.5 h-3.5 rounded-full bg-green-500/80 shadow-[0_0_8px_rgba(34,197,94,0.5)] cursor-pointer hover:bg-green-400"></div>
-                  </div>
-                  <span className="ml-3 font-mono text-xs font-bold text-zinc-300 uppercase tracking-[0.2em]">Log Server Aktif</span>
-                </div>
-                <div className="flex items-center gap-4">
-                  <span className="text-[10px] font-bold text-zinc-500">{logs.length} BARIS</span>
-                  <button onClick={() => setLogs([])} className="material-symbols-outlined text-zinc-400 hover:text-white transition-colors text-sm" title="Bersihin Log">delete_sweep</button>
-                </div>
+          {/* Console Output Area */}
+          <div className="glass-panel border border-white/5 rounded-2xl overflow-hidden shadow-2xl flex flex-col h-[500px] md:h-[600px] relative">
+            <div className="bg-[#131212] px-4 md:px-6 py-3 md:py-4 border-b border-white/5 flex flex-wrap gap-2 justify-between items-center z-10">
+              <div className="flex items-center gap-3">
+                <span className="material-symbols-outlined text-zinc-400">terminal</span>
+                <span className="font-headline font-bold text-sm tracking-widest text-zinc-300 uppercase">Live Console</span>
               </div>
-              <div className="flex-1 p-6 font-mono text-sm overflow-y-auto custom-scrollbar bg-[#0a0a0a] border-t border-b border-white/5 leading-relaxed flex flex-col justify-end">
-                <div className="space-y-1.5 mt-auto">
-                  {logs.map((log, i) => (
-                    <p key={i} className="text-zinc-500">
-                      <span className="text-sky-500">[{log.time}]</span>{' '}
-                      <span className={`text-${log.color}`}>{log.level}</span>: <span className="text-zinc-300">{log.msg}</span>
-                    </p>
-                  ))}
-                  {serverState === 'STARTING' && <p className="text-zinc-500 italic mt-2 animate-pulse">... lagi nyiapin sistem ...</p>}
-                </div>
-              </div>
-              <div className="p-4 bg-surface-container-low">
-                <form onSubmit={handleCommand} className="relative group flex items-center bg-[#0a0a0a] rounded-lg border border-white/5 overflow-hidden focus-within:ring-1 focus-within:ring-sky-500/50">
-                  <span className="absolute left-4 text-sky-400 font-bold text-sm pointer-events-none">&gt;</span>
-                  <input 
-                    value={consoleInput}
-                    onChange={(e) => setConsoleInput(e.target.value)}
-                    disabled={serverState !== 'ONLINE'}
-                    className="w-full bg-transparent border-none pl-10 pr-4 py-3.5 text-sm font-mono text-zinc-300 focus:ring-0 placeholder:text-zinc-600 transition-all outline-none disabled:opacity-50" 
-                    placeholder="Ketik command terus tekan Enter..." 
-                    type="text" 
-                  />
-                </form>
+              <div className="flex gap-2">
+                <button className="p-2 text-zinc-500 hover:text-white bg-white/5 hover:bg-white/10 rounded-lg transition-colors"><span className="material-symbols-outlined text-sm">download</span></button>
+                <button className="p-2 text-zinc-500 hover:text-white bg-white/5 hover:bg-white/10 rounded-lg transition-colors"><span className="material-symbols-outlined text-sm">fullscreen</span></button>
               </div>
             </div>
-
-            {/* Sidebar Content (Players & Info) */}
-            <div className="space-y-6">
-              {/* Players List */}
-              <div className="glass-panel rounded-2xl border border-white/5 shadow-xl overflow-hidden flex flex-col max-h-[400px]">
-                <div className="px-6 py-4 bg-white/5 border-b border-white/5 flex justify-between items-center">
-                  <h3 className="font-headline font-bold text-xs uppercase tracking-widest text-zinc-400">Player Online</h3>
-                  <span className="text-[10px] font-black bg-sky-500/20 text-sky-400 px-2 py-0.5 rounded">{serverState === 'ONLINE' ? '3 / 100' : '0 / 100'}</span>
-                </div>
-                {serverState === 'ONLINE' ? (
-                  <div className="p-4 flex flex-col gap-2 flex-grow overflow-y-auto custom-scrollbar">
-                    <div className="flex items-center justify-between p-2 rounded-xl hover:bg-white/5 transition-colors group">
-                      <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded bg-zinc-800 border border-white/10 overflow-hidden">
-                          <img alt="Minecraft Head" className="w-full h-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4xuIzRUxgPsHaKwXAnvz_vckDZzMKEROM59CENnyiQWAe7fFSmKeTGUXtAhMVDclRBL0nd00olPNYodNUN7vSk3U1BFMv9eQXyAuXt-QmrY-L-ShEfc_nZftbK0gaOfCoBk_ne8o49-C6lrC2THFx6ABxkp_1gEzdL5yLihClNa3jSYFJuU8HF6csuw32Co1vQ3bvEjdsuFTZMKQbVM1EwqQKlNKklORp0KwJDsxYH4G_fn-UTaa1a1Qv9iJTBnOKgMaKrLPmVY2l" />
-                        </div>
-                        <div className="flex flex-col">
-                          <span className="text-sm font-bold text-on-surface group-hover:text-sky-400 transition-colors">SkyViper</span>
-                          <span className="text-[10px] text-zinc-500 uppercase tracking-tighter">Ping: 24ms</span>
-                        </div>
-                      </div>
-                      <button className="material-symbols-outlined text-zinc-600 hover:text-red-500 cursor-pointer text-lg transition-colors p-1" title="Kick Player">block</button>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="p-8 text-center text-sm font-body text-zinc-500 my-auto">
-                    Server offline. Nunggu player join.
-                  </div>
-                )}
-                <button className="w-full py-3 bg-surface-container-high text-xs font-bold text-zinc-400 uppercase tracking-widest hover:text-white transition-all hover:bg-surface-container-highest">
-                  Lihat Semua Player
-                </button>
+            
+            {/* Terminal Lines */}
+            <div className="flex-1 bg-[#09090b] p-4 md:p-6 p-font-mono text-xs md:text-sm overflow-y-auto space-y-2 scroller">
+              <div className="text-zinc-500 mb-4 pb-4 border-b border-white/5">
+                ALTPLAY Server Daemon v2.1.4<br/>
+                Koneksi ke node Diamond-JKT-01 berhasil. Autentikasi disetujui.
               </div>
-
-              {/* Additional Info Card */}
-              <div className="bg-surface-container-low rounded-2xl border border-white/5 p-6 relative group overflow-hidden">
-                <div className="absolute -top-12 -right-12 w-32 h-32 bg-sky-500/10 rounded-full blur-3xl group-hover:bg-sky-500/20 transition-all"></div>
-                <h3 className="font-headline font-bold text-xs uppercase tracking-widest text-zinc-400 mb-4">Quick Settings</h3>
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs text-zinc-500">Auto Backup</span>
-                    <button className="w-8 h-4 bg-secondary-fixed-dim/30 rounded-full relative hover:opacity-80 transition-opacity">
-                      <div className="absolute right-0.5 top-0.5 w-3 h-3 bg-secondary-fixed-dim rounded-full shadow-[0_0_5px_rgba(0,227,131,0.5)]"></div>
-                    </button>
+              {logs.map((log, index) => (
+                <div key={index} className="flex flex-col sm:flex-row sm:gap-4 hover:bg-white/5 px-2 py-0.5 rounded transition-colors group">
+                  <div className="flex gap-4 opacity-50 w-32 shrink-0">
+                    <span className="text-zinc-500">[{log.time}]</span>
+                    <span className={`text-${log.color} font-bold text-[10px] uppercase w-12 tracking-wider`}>{log.level}</span>
                   </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs text-zinc-500">Query Protocol</span>
-                    <span className="text-[10px] font-bold text-on-surface bg-surface-container-highest px-2 py-1 rounded">UDP/TCP</span>
-                  </div>
-                  <button className="w-full mt-4 flex items-center justify-center gap-2 py-3 rounded-lg border border-sky-400/20 text-sky-400 font-headline font-bold text-xs uppercase tracking-tighter hover:bg-sky-500/10 transition-all active:scale-95">
-                    <span className="material-symbols-outlined text-sm">settings_backup_restore</span> Reinstall Server
-                  </button>
+                  <span className={`text-${log.color} font-medium break-all`}>{log.msg}</span>
                 </div>
-              </div>
+              ))}
+              {serverState === 'OFFLINE' && (
+                <div className="text-red-500 opacity-80 py-4 font-bold flex gap-2"><span className="material-symbols-outlined text-sm">power_off</span> Proses dihentikan. Container dalam keadaan istirahat.</div>
+              )}
             </div>
+
+            {/* Input Form */}
+            <form onSubmit={handleCommand} className="bg-surface-container-lowest border-t border-white/5 p-3 md:p-4 flex gap-3 lg:gap-4 z-10">
+              <div className="flex-1 relative">
+                <span className="absolute left-4 top-1/2 -translate-y-1/2 font-mono text-zinc-500 font-bold">&gt;</span>
+                <input 
+                  type="text" 
+                  value={consoleInput}
+                  onChange={(e) => setConsoleInput(e.target.value)}
+                  disabled={serverState !== 'ONLINE'}
+                  className="w-full bg-surface-container border border-white/5 rounded-xl py-3 md:py-4 pl-10 pr-4 text-sm font-mono text-zinc-300 placeholder-zinc-600 focus:outline-none focus:ring-1 focus:ring-sky-500/50 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                  placeholder={serverState === 'ONLINE' ? 'Ketik perintah disini (contoh: /op username)' : 'Server wajib nyala buat ngirim perintah'}
+                />
+              </div>
+              <button 
+                type="submit" 
+                disabled={serverState !== 'ONLINE' || !consoleInput.trim()}
+                className="bg-sky-500/10 text-sky-400 hover:bg-sky-500/20 px-4 md:px-6 rounded-xl font-headline font-bold uppercase tracking-widest text-xs transition-all disabled:opacity-30 disabled:grayscale"
+              >
+                Kirim
+              </button>
+            </form>
           </div>
         </section>
-
-        {/* Footer */}
-        <footer className="w-full py-12 px-8 mt-auto border-t border-white/5 bg-[#131313]">
-          <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
-            <div className="flex flex-col items-center md:items-start gap-2">
-              <img src="/ALTPLAY-logo.png" alt="ALTPLAY" className="h-6 w-auto" />
-              <p className="font-body text-[10px] tracking-widest text-zinc-500 uppercase">© 2026 ALTPLAY. BUKAN PRODUK RESMI MINECRAFT.</p>
-            </div>
-            <div className="flex gap-8">
-              <a className="font-body text-xs tracking-widest uppercase text-zinc-500 hover:text-sky-400 transition-colors" href="#">TOS</a>
-              <a className="font-body text-xs tracking-widest uppercase text-zinc-500 hover:text-sky-400 transition-colors" href="#">Privacy Policy</a>
-              <a className="font-body text-xs tracking-widest uppercase text-zinc-500 hover:text-sky-400 transition-colors" href="#">Discord</a>
-              <a className="font-body text-xs tracking-widest uppercase text-zinc-500 hover:text-sky-400 transition-colors" href="#">System Status</a>
-            </div>
-          </div>
-        </footer>
       </main>
     </div>
   );

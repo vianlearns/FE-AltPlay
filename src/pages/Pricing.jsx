@@ -3,6 +3,13 @@ import { useState } from 'react';
 
 export default function Pricing() {
   const [billing, setBilling] = useState('monthly');
+  const [addons, setAddons] = useState([false, false, false]);
+
+  const toggleAddon = (index) => {
+    const newAddons = [...addons];
+    newAddons[index] = !newAddons[index];
+    setAddons(newAddons);
+  };
 
   const getPrice = (base) => {
     if (billing === 'yearly') return (base * 0.85).toLocaleString('id-ID');
@@ -19,29 +26,39 @@ export default function Pricing() {
           <p className="text-on-surface-variant max-w-2xl mx-auto text-lg">
             Pilih kekuatan mesin yang pas buat duniamu. Nggak ada biaya tersembunyi.
           </p>
-          
+
           {/* Billing Toggle */}
-          <div className="mt-10 inline-flex bg-surface-container-high rounded-full p-1 border border-white/5 relative">
-            <button 
+          <div className="mt-12 inline-flex items-center justify-center p-1.5 bg-[#1a1a1a] rounded-2xl border border-white/5 relative w-full max-w-[400px]">
+            <button
               onClick={() => setBilling('monthly')}
-              className={`px-8 py-3 rounded-full font-headline font-bold text-sm tracking-wider uppercase transition-all z-10 ${billing === 'monthly' ? 'text-on-primary-container' : 'text-zinc-500 hover:text-white'}`}
+              className={`relative z-10 flex-1 py-3 px-6 rounded-xl font-headline font-bold text-xs tracking-[0.1em] uppercase transition-all duration-300 ${billing === 'monthly' ? 'text-black' : 'text-zinc-500 hover:text-zinc-300'}`}
             >
               Bulanan
             </button>
-            <button 
+            <button
               onClick={() => setBilling('yearly')}
-              className={`px-8 py-3 rounded-full font-headline font-bold text-sm tracking-wider uppercase transition-all z-10 flex items-center gap-2 ${billing === 'yearly' ? 'text-on-primary-container' : 'text-zinc-500 hover:text-white'}`}
+              className={`relative z-10 flex-1 py-3 px-6 rounded-xl font-headline font-bold text-xs tracking-[0.1em] uppercase transition-all duration-300 flex items-center justify-center gap-2 ${billing === 'yearly' ? 'text-black' : 'text-zinc-500 hover:text-zinc-300'}`}
             >
-              Tahunan <span className="bg-primary/20 text-primary px-2 py-0.5 rounded text-[10px]">-15%</span>
+              Tahunan
+              <span className={`px-2 py-0.5 rounded-md text-[9px] font-black tracking-tight ${billing === 'yearly' ? 'bg-black/20 text-black/80' : 'bg-primary/10 text-primary'}`}>
+                HEMAT 15%
+              </span>
             </button>
-            {/* Semantic Background Slide */}
-            <div className={`absolute top-1 bottom-1 w-[calc(50%-4px)] bg-primary rounded-full transition-transform duration-300 ease-out shadow-[0_0_15px_rgba(0,209,255,0.4)] ${billing === 'yearly' ? 'translate-x-[calc(100%+8px)]' : 'translate-x-0'}`}></div>
+            
+            {/* Background Slider */}
+            <div 
+              className="absolute inset-y-1.5 transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] bg-primary rounded-xl shadow-[0_0_20px_rgba(0,209,255,0.3)]"
+              style={{
+                width: 'calc(50% - 6px)',
+                left: billing === 'monthly' ? '6px' : 'calc(50%)',
+              }}
+            />
           </div>
         </header>
 
         {/* Pricing Cards Grid */}
         <div className="grid md:grid-cols-3 gap-8 mb-20">
-          
+
           {/* Starter Tier */}
           <div className="glass-panel p-10 rounded-2xl flex flex-col border border-white/5 hover:border-outline-variant/30 transition-all duration-300">
             <div className="mb-6">
@@ -59,11 +76,11 @@ export default function Pricing() {
               <li className="flex items-center gap-3"><span className="material-symbols-outlined text-zinc-600 text-lg">group</span> Sampe 20 Player</li>
               <li className="flex items-center gap-3"><span className="material-symbols-outlined text-zinc-600 text-lg">support_agent</span> Support Standar</li>
             </ul>
-            <a href="/configure" className="w-full py-4 text-center rounded-xl bg-surface-container-high hover:bg-surface-container-highest font-headline font-bold uppercase tracking-wider transition-all active:scale-95">Pilih Iron</a>
+            <a href="/beli" className="w-full py-4 text-center rounded-xl bg-surface-container-high hover:bg-surface-container-highest font-headline font-bold uppercase tracking-wider transition-all active:scale-95">Pilih Iron</a>
           </div>
 
           {/* Pro Tier (Featured) */}
-          <div className="glass-panel p-10 rounded-2xl flex flex-col border border-primary/40 relative scale-105 shadow-[0_0_40px_-10px_rgba(0,209,255,0.2)] bg-surface-container-low">
+          <div className="glass-panel p-10 rounded-2xl flex flex-col border border-primary/40 relative lg:scale-105 shadow-[0_0_40px_-10px_rgba(0,209,255,0.2)] bg-surface-container-low">
             <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-primary text-on-primary-container px-4 py-1 text-[10px] font-black uppercase tracking-widest rounded-full shadow-[0_0_10px_rgba(0,209,255,0.5)]">
               Paling Populer
             </div>
@@ -82,7 +99,7 @@ export default function Pricing() {
               <li className="flex items-center gap-3"><span className="material-symbols-outlined text-primary text-lg">group</span> Slot Unlimited</li>
               <li className="flex items-center gap-3"><span className="material-symbols-outlined text-primary text-lg">security</span> Advanced DDoS Protection</li>
             </ul>
-            <a href="/configure" className="w-full py-4 text-center rounded-xl bg-primary text-on-primary-container font-headline font-black uppercase tracking-wider hover:brightness-110 active:scale-95 transition-all shadow-[0_0_20px_rgba(0,209,255,0.3)]">Buat Sekarang</a>
+            <a href="/beli" className="w-full py-4 text-center rounded-xl bg-primary text-on-primary-container font-headline font-black uppercase tracking-wider hover:brightness-110 active:scale-95 transition-all shadow-[0_0_20px_rgba(0,209,255,0.3)]">Buat Sekarang</a>
           </div>
 
           {/* Extreme Tier */}
@@ -102,7 +119,7 @@ export default function Pricing() {
               <li className="flex items-center gap-3"><span className="material-symbols-outlined text-secondary-fixed-dim text-lg">network_node</span> Gratis Dedicated IP</li>
               <li className="flex items-center gap-3"><span className="material-symbols-outlined text-secondary-fixed-dim text-lg">support_agent</span> Priority Support 24/7</li>
             </ul>
-            <a href="/configure" className="w-full py-4 text-center rounded-xl border border-secondary-fixed-dim/50 text-secondary-fixed-dim font-headline font-bold uppercase tracking-wider hover:bg-secondary-fixed-dim/10 active:scale-95 transition-all">Pilih Netherite</a>
+            <a href="/beli" className="w-full py-4 text-center rounded-xl border border-secondary-fixed-dim/50 text-secondary-fixed-dim font-headline font-bold uppercase tracking-wider hover:bg-secondary-fixed-dim/10 active:scale-95 transition-all">Pilih Netherite</a>
           </div>
 
         </div>
@@ -112,9 +129,9 @@ export default function Pricing() {
           <h2 className="text-3xl font-headline font-black tracking-tighter uppercase mb-8 text-center text-on-surface">Add-ons Opsional</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
             {/* Addon 1 */}
-            <div className="bg-surface-container-low p-6 rounded-xl border border-white/5 flex items-start gap-4 hover:bg-surface-container hover:border-primary/20 transition-all cursor-pointer group">
-              <div className="mt-1">
-                <input type="checkbox" className="w-5 h-5 rounded border-white/10 bg-surface-container-highest text-primary focus:ring-primary/50 cursor-pointer" />
+            <div onClick={() => toggleAddon(0)} className={`p-6 rounded-xl border flex items-start gap-4 transition-all cursor-pointer group select-none ${addons[0] ? 'bg-surface-container border-primary/50 shadow-[0_0_20px_rgba(0,209,255,0.1)]' : 'bg-surface-container-low border-white/5 hover:bg-surface-container hover:border-primary/20'}`}>
+              <div className="mt-1 relative">
+                <input readOnly checked={addons[0]} type="checkbox" className="w-5 h-5 rounded border-white/10 bg-surface-container-highest text-primary focus:ring-primary/50 cursor-pointer pointer-events-none" />
               </div>
               <div className="flex-grow">
                 <h4 className="font-headline font-bold text-on-surface group-hover:text-primary transition-colors">Daily Auto Backup</h4>
@@ -123,9 +140,9 @@ export default function Pricing() {
               <div className="text-primary font-bold text-sm whitespace-nowrap">Rp 45.000<span className="text-[10px] text-zinc-500">/bln</span></div>
             </div>
             {/* Addon 2 */}
-            <div className="bg-surface-container-low p-6 rounded-xl border border-white/5 flex items-start gap-4 hover:bg-surface-container hover:border-primary/20 transition-all cursor-pointer group">
-              <div className="mt-1">
-                <input type="checkbox" className="w-5 h-5 rounded border-white/10 bg-surface-container-highest text-primary focus:ring-primary/50 cursor-pointer" />
+            <div onClick={() => toggleAddon(1)} className={`p-6 rounded-xl border flex items-start gap-4 transition-all cursor-pointer group select-none ${addons[1] ? 'bg-surface-container border-primary/50 shadow-[0_0_20px_rgba(0,209,255,0.1)]' : 'bg-surface-container-low border-white/5 hover:bg-surface-container hover:border-primary/20'}`}>
+              <div className="mt-1 relative">
+                <input readOnly checked={addons[1]} type="checkbox" className="w-5 h-5 rounded border-white/10 bg-surface-container-highest text-primary focus:ring-primary/50 cursor-pointer pointer-events-none" />
               </div>
               <div className="flex-grow">
                 <h4 className="font-headline font-bold text-on-surface group-hover:text-primary transition-colors">Dedicated IP</h4>
@@ -134,9 +151,9 @@ export default function Pricing() {
               <div className="text-primary font-bold text-sm whitespace-nowrap">Rp 75.000<span className="text-[10px] text-zinc-500">/bln</span></div>
             </div>
             {/* Addon 3 */}
-            <div className="bg-surface-container-low p-6 rounded-xl border border-white/5 flex items-start gap-4 hover:bg-surface-container hover:border-primary/20 transition-all cursor-pointer group">
-              <div className="mt-1">
-                <input type="checkbox" className="w-5 h-5 rounded border-white/10 bg-surface-container-highest text-primary focus:ring-primary/50 cursor-pointer" />
+            <div onClick={() => toggleAddon(2)} className={`p-6 rounded-xl border flex items-start gap-4 transition-all cursor-pointer group select-none ${addons[2] ? 'bg-surface-container border-primary/50 shadow-[0_0_20px_rgba(0,209,255,0.1)]' : 'bg-surface-container-low border-white/5 hover:bg-surface-container hover:border-primary/20'}`}>
+              <div className="mt-1 relative">
+                <input readOnly checked={addons[2]} type="checkbox" className="w-5 h-5 rounded border-white/10 bg-surface-container-highest text-primary focus:ring-primary/50 cursor-pointer pointer-events-none" />
               </div>
               <div className="flex-grow">
                 <h4 className="font-headline font-bold text-on-surface group-hover:text-primary transition-colors">Modpack Manager</h4>

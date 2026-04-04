@@ -14,11 +14,11 @@ export default function Contact() {
 
   return (
     <Layout>
-      <div className="pt-20 pb-32 px-8 min-h-screen relative overflow-hidden">
+      <div className="pt-24 md:pt-28 pb-32 px-6 md:px-8 min-h-screen relative overflow-hidden">
         {/* Background Decorative Glow */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[500px] bg-primary/5 blur-[120px] rounded-full -z-10"></div>
         
-        <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-20 items-start">
+        <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 lg:gap-20 items-start">
           
           {/* Header & Info */}
           <div className="space-y-10">
@@ -26,7 +26,7 @@ export default function Contact() {
               <span className="inline-block px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-[10px] font-black tracking-[0.2em] uppercase">
                 Hubungi Kami
               </span>
-              <h1 className="text-6xl md:text-7xl font-headline font-black tracking-tighter leading-none uppercase text-on-surface">
+              <h1 className="text-5xl md:text-6xl lg:text-7xl font-headline font-black tracking-tighter leading-none uppercase text-on-surface">
                 BUTUH <span className="text-primary">BANTUAN</span>?
               </h1>
               <p className="text-on-surface-variant text-lg max-w-lg leading-relaxed">
