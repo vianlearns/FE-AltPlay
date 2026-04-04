@@ -62,6 +62,41 @@ const addonOptions = [
   { id: 'modpack', name: 'Modpack Manager', desc: 'Instal modpack CurseForge mudah.', price: 25000 }
 ];
 
+const locationOptions = [
+  { id: 'Jakarta (ID)', name: 'Jakarta (ID)', ping: '15ms', icon: 'flag' },
+  { id: 'Singapore (SG)', name: 'Singapore (SG)', ping: '25ms', icon: 'public' },
+  { id: 'Australia (AU)', name: 'Australia (AU)', ping: '85ms', icon: 'public' },
+  { id: 'Germany (DE)', name: 'Germany (DE)', ping: '160ms', icon: 'public' },
+  { id: 'USA West (US)', name: 'USA West (US)', ping: '180ms', icon: 'public' }
+];
+
+const gameVersions = {
+  Java: [
+    {
+      group: 'Latest',
+      versions: ['Minecraft 26.1.1', 'Minecraft 26.1', 'Minecraft 26.0']
+    },
+    {
+      group: 'Stable / Popular',
+      versions: ['Minecraft 1.21.1', 'Minecraft 1.20.4', 'Minecraft 1.20.1', 'Minecraft 1.19.4']
+    },
+    {
+      group: 'Legacy / Modded',
+      versions: ['Minecraft 1.18.2', 'Minecraft 1.16.5', 'Minecraft 1.12.2', 'Minecraft 1.8.9', 'Minecraft 1.7.10']
+    }
+  ],
+  Bedrock: [
+    {
+      group: 'Latest',
+      versions: ['Bedrock 26.10', 'Bedrock 26.0']
+    },
+    {
+      group: 'Stable',
+      versions: ['Bedrock 1.21.40', 'Bedrock 1.21.30', 'Bedrock 1.20.80']
+    }
+  ]
+};
+
 const CACHE_KEY = 'altplay_config_cache';
 
 export default function Configure() {
@@ -89,6 +124,7 @@ export default function Configure() {
   const [billingCycle, setBillingCycle] = useState(() => cache?.billingCycle || 1);
   const [promoCode, setPromoCode] = useState(() => cache?.promoCode || '');
   const [isDeploying, setIsDeploying] = useState(false);
+  const [isLocationOpen, setIsLocationOpen] = useState(false);
 
   useEffect(() => {
     // Parsing URL Parameters untuk Pre-select
@@ -118,6 +154,15 @@ export default function Configure() {
       window.history.replaceState({}, '', window.location.pathname);
     }
   }, [searchParams]);
+
+  // Handle Env Change - Reset Version
+  useEffect(() => {
+    // Only reset if the current version doesn't exist in the new env
+    const availableVersions = gameVersions[env].flatMap(g => g.versions);
+    if (!availableVersions.includes(version)) {
+      setVersion(gameVersions[env][0].versions[0]);
+    }
+  }, [env]);
 
   // Persist State to LocalStorage
   useEffect(() => {
@@ -174,7 +219,7 @@ export default function Configure() {
 
   const handleDeploy = (e) => {
     e.preventDefault();
-    if (step < 4) return;
+    if (step < 3) return;
 
     // TODO: Integrasi Payment Gateway Midtrans (Snap)
     // window.snap.pay(transactionToken, { onSuccess: ... })
@@ -190,7 +235,7 @@ export default function Configure() {
     setAddons(prev => ({ ...prev, [id]: !prev[id] }));
   };
 
-  const nextStep = () => { if (step < 4) setStep(step + 1); };
+  const nextStep = () => { if (step < 3) setStep(step + 1); };
   const prevStep = () => { if (step > 1) setStep(step - 1); };
 
   const getStepStatus = (idx) => {
@@ -209,24 +254,24 @@ export default function Configure() {
 
           <div className="relative z-10 w-full px-2">
             <ul className="flex items-center justify-between w-full relative">
-              {[1, 2, 3, 4].map((num) => (
-                <li key={num} className={`flex items-center ${num !== 4 ? 'w-full' : ''}`}>
-                  <div 
-                    className="relative flex flex-col items-center group cursor-pointer" 
+              {[1, 2, 3].map((num) => (
+                <li key={num} className={`flex items-center ${num !== 3 ? 'w-full' : ''}`}>
+                  <div
+                    className="relative flex flex-col items-center group cursor-pointer"
                     onClick={() => setStep(num)}
                   >
                     <div className={`w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center font-bold text-sm md:text-base border transition-all duration-300 z-10 relative ${getStepStatus(num)} group-hover:border-primary/50`}>
-                      {num === 4 ? (
+                      {num === 3 ? (
                         <span className="material-symbols-outlined text-[18px]">shopping_cart_checkout</span>
                       ) : (
                         step > num ? <span className="material-symbols-outlined text-[18px]">check</span> : num
                       )}
                     </div>
                     <span className={`absolute top-12 text-[9px] md:text-[10px] font-bold uppercase tracking-widest hidden sm:block whitespace-nowrap ${step === num ? 'text-on-surface' : 'text-zinc-600'}`}>
-                      {num === 1 ? 'Mesin & Addons' : num === 2 ? 'Environment' : num === 3 ? 'Lokasi' : 'Konfirmasi'}
+                      {num === 1 ? 'Server' : num === 2 ? 'Environment' : 'Konfirmasi'}
                     </span>
                   </div>
-                  {num !== 4 && (
+                  {num !== 3 && (
                     <div className={`flex-1 h-1 transition-all duration-500 mx-2 md:mx-4 rounded-full ${step > num ? 'bg-primary' : 'bg-white/10'}`}></div>
                   )}
                 </li>
@@ -324,6 +369,67 @@ export default function Configure() {
 
                   <div className="h-px bg-white/5 w-full my-8"></div>
 
+                  {/* Location Dropdown Selection */}
+                  <div className="relative z-[30]">
+                    <h2 className="text-2xl font-headline font-black uppercase text-on-surface mb-6 flex items-center gap-3">
+                      <span className="material-symbols-outlined text-primary">location_on</span>
+                      Lokasi Server
+                    </h2>
+
+                    <div className="relative max-w-md">
+                      <button
+                        type="button"
+                        onClick={() => setIsLocationOpen(!isLocationOpen)}
+                        className={`w-full p-4 rounded-xl border bg-surface-container-low flex items-center justify-between transition-all hover:border-primary/50 group ${isLocationOpen ? 'border-primary shadow-[0_0_20px_rgba(0,209,255,0.1)]' : 'border-white/5'}`}
+                      >
+                        <div className="flex items-center gap-3">
+                          <div className="w-8 h-8 rounded-lg bg-surface-container-high flex items-center justify-center text-primary">
+                            <span className="material-symbols-outlined text-lg">{locationOptions.find(l => l.id === region)?.icon || 'public'}</span>
+                          </div>
+                          <div className="text-left">
+                            <div className="text-on-surface font-headline font-bold uppercase tracking-tight text-sm">{region}</div>
+                            <div className="text-[9px] text-zinc-500 font-bold uppercase tracking-widest flex items-center gap-2">
+                              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                              Ping: {locationOptions.find(l => l.id === region)?.ping}
+                            </div>
+                          </div>
+                        </div>
+                        <span className={`material-symbols-outlined text-zinc-500 transition-transform duration-300 ${isLocationOpen ? 'rotate-180 text-primary' : ''}`}>expand_more</span>
+                      </button>
+
+                      {/* Dropdown Menu */}
+                      <div className={`absolute top-full left-0 w-full mt-2 bg-surface-container-high border border-white/10 rounded-xl overflow-hidden transition-all duration-300 origin-top z-50 shadow-2xl ${isLocationOpen ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'}`}>
+                        <div className="max-h-[250px] overflow-y-auto custom-scrollbar">
+                          {locationOptions.map((loc) => (
+                            <div
+                              key={loc.id}
+                              onClick={() => {
+                                setRegion(loc.id);
+                                setIsLocationOpen(false);
+                              }}
+                              className={`p-3 flex items-center justify-between cursor-pointer transition-colors hover:bg-white/5 border-b border-white/5 last:border-0 ${region === loc.id ? 'bg-primary/5' : ''}`}
+                            >
+                              <div className="flex items-center gap-3">
+                                <div className={`w-7 h-7 rounded-md flex items-center justify-center ${region === loc.id ? 'bg-primary/20 text-primary' : 'bg-surface-container text-zinc-500'}`}>
+                                  <span className="material-symbols-outlined text-[16px]">{loc.icon}</span>
+                                </div>
+                                <div>
+                                  <div className={`text-xs font-bold uppercase tracking-tight ${region === loc.id ? 'text-primary' : 'text-on-surface'}`}>{loc.name}</div>
+                                  <div className="text-[8px] text-zinc-500 font-bold uppercase tracking-tighter">Latency: ~{loc.ping}</div>
+                                </div>
+                              </div>
+                              {region === loc.id && (
+                                <span className="material-symbols-outlined text-primary text-[18px]">check_circle</span>
+                              )}
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="h-px bg-white/5 w-full my-8"></div>
+
                   {/* Add-ons Section */}
                   <div>
                     <h2 className="text-2xl font-headline font-black uppercase text-on-surface mb-2">Add-ons Opsional</h2>
@@ -413,11 +519,15 @@ export default function Configure() {
                         onChange={(e) => setVersion(e.target.value)}
                         className="bg-surface-container-low border border-white/5 rounded-xl text-on-surface text-sm py-4 px-4 focus:ring-2 focus:ring-primary/40 focus:bg-surface-container transition-all cursor-pointer appearance-none outline-none"
                       >
-                        <option>Minecraft 1.21.1 (Terbaru)</option>
-                        <option>Minecraft 1.20.1 (Populer)</option>
-                        <option>Minecraft 1.16.5</option>
-                        <option>Minecraft 1.12.2</option>
-                        <option>Minecraft 1.8.8</option>
+                        {gameVersions[env].map((group) => (
+                          <optgroup key={group.group} label={group.group} className="bg-surface-container-high text-primary font-bold">
+                            {group.versions.map((v) => (
+                              <option key={v} value={v} className="bg-surface-container-low text-on-surface font-normal">
+                                {v}
+                              </option>
+                            ))}
+                          </optgroup>
+                        ))}
                       </select>
                     </div>
                     <div className="flex flex-col gap-2">
@@ -441,37 +551,8 @@ export default function Configure() {
                 </section>
               )}
 
-              {/* STEP 3: Lokasi Server */}
+              {/* STEP 3: Konfirmasi */}
               {step === 3 && (
-                <section className="animate-fade-in space-y-10">
-                  <div>
-                    <h2 className="text-2xl font-headline font-black uppercase text-on-surface mb-2">Lokasi Server</h2>
-                    <p className="text-zinc-400 text-sm mb-6">Pilih lokasi Node terdekat dengan player kamu buat ping terendah.</p>
-
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                      {['Jakarta (ID)', 'Surabaya (ID)', 'Singapura (SG)', 'Tokyo (JP)'].map((loc) => (
-                        <div
-                          key={loc}
-                          onClick={() => setRegion(loc)}
-                          className={`p-4 border rounded-xl cursor-pointer text-center transition-all duration-300 ${region === loc ? 'bg-primary/10 border-primary text-primary' : 'bg-surface-container-low border-white/5 text-zinc-400 hover:text-white'}`}
-                        >
-                          <span className="material-symbols-outlined text-3xl mb-2 flex justify-center">public</span>
-                          <h4 className="font-bold text-sm tracking-tight">{loc}</h4>
-                          <div className="text-[10px] font-bold uppercase tracking-widest mt-1 opacity-70">Antrean Rendah</div>
-                        </div>
-                      ))}
-                      <div className="p-4 border rounded-xl text-center opacity-50 grayscale cursor-not-allowed border-white/5">
-                        <span className="material-symbols-outlined text-3xl mb-2 flex justify-center text-zinc-500">public</span>
-                        <h4 className="font-bold text-sm text-zinc-500">Frankfurt, EU</h4>
-                        <div className="text-[10px] text-zinc-600 font-bold uppercase mt-1">Full Capacity</div>
-                      </div>
-                    </div>
-                  </div>
-                </section>
-              )}
-
-              {/* STEP 4: Konfirmasi */}
-              {step === 4 && (
                 <section className="animate-fade-in space-y-8">
                   <h2 className="text-2xl font-headline font-black uppercase text-on-surface mb-6">Konfirmasi Pesanan</h2>
                   <div className="bg-surface-container-high/40 p-6 rounded-2xl border border-white/5 space-y-4">
@@ -528,12 +609,12 @@ export default function Configure() {
             <div className="mt-12 flex justify-between items-center pt-6 border-t border-white/5">
               <button
                 onClick={prevStep}
-                className={`py-3 px-6 rounded-xl font-headline font-bold text-sm tracking-wider uppercase transition-all flex items-center gap-2 ${step === 1 ? 'opacity-0 pointer-events-none' : (step === 4 ? 'hidden md:flex' : 'flex')} text-zinc-400 hover:text-white`}
+                className={`py-3 px-6 rounded-xl font-headline font-bold text-sm tracking-wider uppercase transition-all flex items-center gap-2 ${step === 1 ? 'opacity-0 pointer-events-none' : (step === 3 ? 'hidden md:flex' : 'flex')} text-zinc-400 hover:text-white`}
               >
                 <span className="material-symbols-outlined text-sm">arrow_back</span> Kembali
               </button>
 
-              {step < 4 && (
+              {step < 3 && (
                 <button
                   onClick={nextStep}
                   className="py-3 px-8 rounded-xl bg-surface-container-high text-on-surface border border-white/10 hover:bg-white/10 font-headline font-bold text-sm tracking-widest uppercase transition-all active:scale-95 flex items-center gap-2 shadow-lg"
@@ -546,7 +627,7 @@ export default function Configure() {
           </div>
 
           {/* Right Column: Sticky Summary Sidebar - Optional Mobile Visibility */}
-          <aside className={`${step === 4 ? 'block' : 'hidden lg:block'} lg:col-span-4 sticky top-24 animate-fade-in`}>
+          <aside className={`${step === 3 ? 'block' : 'hidden lg:block'} lg:col-span-4 sticky top-24 animate-fade-in`}>
             <div className="glass-card rounded-2xl p-6 md:p-8 border border-white/10 shadow-2xl bg-[#131313]/90 relative overflow-hidden">
               <div className="absolute top-0 left-0 w-full h-1 bg-primary"></div>
 
@@ -586,13 +667,13 @@ export default function Configure() {
               </div>
 
               <button
-                onClick={step === 4 ? handleDeploy : nextStep}
+                onClick={step === 3 ? handleDeploy : nextStep}
                 disabled={isDeploying}
-                className={`w-full py-4 rounded-xl font-headline font-black text-sm uppercase transition-all flex items-center justify-center gap-2 ${step === 4 ? 'bg-primary text-on-primary shadow-lg hover:brightness-110' : 'bg-surface-container-highest text-on-surface hover:bg-white/10 shadow-lg'}`}
+                className={`w-full py-4 rounded-xl font-headline font-black text-sm uppercase transition-all flex items-center justify-center gap-2 ${step === 3 ? 'bg-primary text-on-primary shadow-lg hover:brightness-110' : 'bg-surface-container-highest text-on-surface hover:bg-white/10 shadow-lg'}`}
               >
                 {isDeploying ? (
                   'Processing...'
-                ) : step === 4 ? (
+                ) : step === 3 ? (
                   <>
                     <span>Bayar Sekarang</span>
                     <span className="material-symbols-outlined text-lg" style={{ fontVariationSettings: "'wght' 700" }}>payments</span>
@@ -612,7 +693,7 @@ export default function Configure() {
               onClick={prevStep}
               className="md:hidden w-full mt-6 py-4 rounded-xl font-headline font-bold text-sm tracking-widest uppercase text-zinc-500 hover:text-white transition-colors flex items-center justify-center gap-2"
             >
-              <span className="material-symbols-outlined text-sm">arrow_back</span> Kembali Ke Lokasi
+              <span className="material-symbols-outlined text-sm">arrow_back</span> Kembali Ke Setup
             </button>
           </aside>
         </div>

@@ -359,7 +359,7 @@ export default function Home() {
                   <li className="flex items-center gap-3"><span className="material-symbols-outlined text-zinc-500 text-[18px]">group</span>Sampe 20 Player</li>
                   <li className="flex items-center gap-3"><span className="material-symbols-outlined text-zinc-500 text-[18px]">support_agent</span>Support Standar</li>
                 </ul>
-                <button 
+                <button
                   onClick={() => handleSelectNode('iron', 'Iron Node')}
                   className="w-full block text-center py-4 border border-outline-variant/40 hover:bg-white/5 rounded-xl font-headline font-bold uppercase tracking-wider transition-all active:scale-95 text-xs text-on-surface mt-auto"
                 >
@@ -386,7 +386,7 @@ export default function Home() {
                     <li className="flex items-center gap-3"><span className="material-symbols-outlined text-primary text-[18px]">group</span>Slot Unlimited</li>
                     <li className="flex items-center gap-3"><span className="material-symbols-outlined text-primary text-[18px]">security</span>Advanced DDoS Protection</li>
                   </ul>
-                  <button 
+                  <button
                     onClick={() => handleSelectNode('diamond', 'Diamond Node')}
                     className="w-full block text-center py-4 bg-primary text-on-primary-container rounded-xl font-headline font-black uppercase tracking-wider transition-all shadow-[0_10px_20px_-5px_rgba(0,209,255,0.3)] hover:brightness-110 active:scale-95 text-xs mt-auto"
                   >
@@ -411,7 +411,7 @@ export default function Home() {
                   <li className="flex items-center gap-3"><span className="material-symbols-outlined text-secondary-fixed-dim text-[18px]">network_node</span>Gratis Dedicated IP</li>
                   <li className="flex items-center gap-3"><span className="material-symbols-outlined text-secondary-fixed-dim text-[18px]">support_agent</span>Priority Support 24/7</li>
                 </ul>
-                <button 
+                <button
                   onClick={() => handleSelectNode('netherite', 'Netherite Node')}
                   className="w-full block text-center py-4 border border-outline-variant/40 hover:bg-white/5 hover:border-secondary-fixed-dim/50 hover:text-secondary-fixed-dim rounded-xl font-headline font-bold uppercase tracking-wider transition-all active:scale-95 text-xs text-on-surface mt-auto"
                 >
@@ -491,7 +491,7 @@ export default function Home() {
                   </div>
                   <p className="text-on-surface leading-relaxed italic mb-8 font-body text-sm">"ALTPLAY udah jadi rumah buat komunitas klandestin kami. Panel Pterodactyl-nya kenceng, UI-nya keren dark mode, dan harganya jujur banget nggak berbelit."</p>
                   <div className="flex items-center gap-4 mt-auto">
-                    <img alt="avatar" className="w-10 h-10 rounded-full bg-zinc-800 object-cover" src="/solar_nexus.jpg" />
+                    <img alt="avatar" className="w-10 h-10 rounded-full bg-zinc-800 object-cover" src="/solar_nexus.webp" />
                     <div>
                       <div className="font-headline font-bold text-xs uppercase text-on-surface tracking-tight">SolarNexus_x</div>
                       <div className="text-[10px] text-zinc-500 uppercase tracking-widest mt-0.5">Streamer Twitch</div>
@@ -551,11 +551,11 @@ export default function Home() {
           <div className="absolute top-1/2 right-0 -translate-y-1/2 w-[500px] h-[500px] bg-secondary-container/10 blur-[130px] rounded-full pointer-events-none"></div>
         </section>
 
-        <AddonModal 
-          isOpen={isModalOpen} 
-          onClose={() => setIsModalOpen(false)} 
-          tierId={selectedTier.id} 
-          tierName={selectedTier.name} 
+        <AddonModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          tierId={selectedTier.id}
+          tierName={selectedTier.name}
         />
       </div>
     </Layout>
