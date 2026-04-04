@@ -70,8 +70,9 @@ export default function Auth() {
             <form onSubmit={handleSubmit} className="space-y-6">
               {!isLogin && (
                 <div className="space-y-2">
-                  <label className="text-[10px] uppercase font-bold tracking-widest text-zinc-500 ml-1">Nama Lengkap</label>
+                  <label htmlFor="authName" className="text-[10px] uppercase font-bold tracking-widest text-zinc-500 ml-1">Nama Lengkap</label>
                   <input
+                    id="authName"
                     type="text"
                     required
                     value={name}
@@ -82,8 +83,9 @@ export default function Auth() {
                 </div>
               )}
               <div className="space-y-2">
-                <label className="text-[10px] uppercase font-bold tracking-widest text-zinc-500 ml-1">Email</label>
+                <label htmlFor="authEmail" className="text-[10px] uppercase font-bold tracking-widest text-zinc-500 ml-1">Email</label>
                 <input
+                  id="authEmail"
                   type="email"
                   required
                   value={email}
@@ -94,10 +96,11 @@ export default function Auth() {
               </div>
               <div className="space-y-2">
                 <div className="flex justify-between items-center ml-1">
-                  <label className="text-[10px] uppercase font-bold tracking-widest text-zinc-500">Kata Sandi</label>
+                  <label htmlFor="authPassword" className="text-[10px] uppercase font-bold tracking-widest text-zinc-500">Kata Sandi</label>
                   {isLogin && <a href="#" className="text-[10px] text-primary hover:underline">Lupa Sandi?</a>}
                 </div>
                 <input
+                  id="authPassword"
                   type="password"
                   required
                   value={password}

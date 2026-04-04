@@ -6,8 +6,8 @@ export default function Navbar() {
   return (
     <nav className="fixed top-0 w-full z-50 bg-[#131313]/80 backdrop-blur-md border-b border-white/5 shadow-[0_0_40px_-10px_rgba(76,214,255,0.08)]">
       <div className="flex justify-between items-center px-4 md:px-8 py-4 max-w-[1920px] mx-auto relative">
-        <a href="/" className="flex items-center gap-3 group">
-          <img src="/ALTPLAY-logo.png" alt="ALTPLAY Logo" className="h-7 md:h-8 w-auto brightness-0 invert transition-transform group-hover:scale-110" />
+        <a href="/" aria-label="Beranda ALTPLAY" className="flex items-center gap-3 group">
+          <img src="/ALTPLAY-logo.png" alt="ALTPLAY Logo" width="32" height="32" className="h-7 md:h-8 w-auto brightness-0 invert transition-transform group-hover:scale-110" />
           <div className="text-xl md:text-2xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-cyan-400 font-headline uppercase">
             ALTPLAY
           </div>
@@ -25,8 +25,8 @@ export default function Navbar() {
         {/* Action Buttons */}
         <div className="flex items-center gap-2 md:gap-6">
           <div className="hidden lg:flex items-center gap-4 text-zinc-500">
-            <span className="material-symbols-outlined hover:bg-white/5 p-2 rounded-full cursor-pointer transition-all duration-300 pointer-events-auto">notifications</span>
-            <span className="material-symbols-outlined hover:bg-white/5 p-2 rounded-full cursor-pointer transition-all duration-300 pointer-events-auto">settings</span>
+            <button aria-label="Notifikasi" className="material-symbols-outlined hover:bg-white/5 p-2 rounded-full cursor-pointer transition-all duration-300 pointer-events-auto">notifications</button>
+            <button aria-label="Pengaturan" className="material-symbols-outlined hover:bg-white/5 p-2 rounded-full cursor-pointer transition-all duration-300 pointer-events-auto">settings</button>
           </div>
           <a href="/auth" className="hidden sm:inline-block bg-gradient-to-r from-primary to-primary-container text-on-primary px-6 py-2.5 font-headline font-bold text-sm tracking-tight uppercase active:scale-95 transition-transform rounded-sm border border-primary-fixed-dim/30 pointer-events-auto shadow-[0_0_15px_rgba(0,209,255,0.2)] hover:shadow-[0_0_25px_rgba(0,209,255,0.4)]">
             Login
@@ -34,10 +34,12 @@ export default function Navbar() {
           
           {/* Mobile Menu Toggle */}
           <button 
+            aria-label="Toggle Menu Mobile"
+            aria-expanded={isMobileMenuOpen}
             className="lg:hidden flex items-center justify-center p-2 text-zinc-300 hover:text-white transition-colors pointer-events-auto border border-white/5 rounded-lg bg-white/5 ml-2"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
-            <span className="material-symbols-outlined text-2xl">{isMobileMenuOpen ? 'close' : 'menu'}</span>
+            <span aria-hidden="true" className="material-symbols-outlined text-2xl">{isMobileMenuOpen ? 'close' : 'menu'}</span>
           </button>
         </div>
       </div>

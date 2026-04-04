@@ -4,7 +4,7 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto flex flex-col lg:flex-row justify-between items-start gap-12 lg:gap-20">
         <div className="space-y-6 max-w-sm w-full">
           <div className="flex items-center gap-3">
-            <img src="/ALTPLAY-logo.png" alt="ALTPLAY Logo" className="h-8 w-auto brightness-0 invert" />
+            <img src="/ALTPLAY-logo.png" alt="ALTPLAY Logo" width="32" height="32" className="h-8 w-auto brightness-0 invert" />
             <div className="text-2xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-cyan-400 font-headline uppercase">
               ALTPLAY
             </div>
@@ -16,7 +16,7 @@ export default function Footer() {
             <div className="flex -space-x-2">
               {[1, 2, 3, 4].map(i => (
                 <div key={i} className="w-8 h-8 rounded-full border-2 border-surface-container-lowest bg-zinc-800 flex items-center justify-center overflow-hidden">
-                  <img src={`https://i.pravatar.cc/100?img=${i + 10}`} alt="User" />
+                  <img src={`https://i.pravatar.cc/100?img=${i + 10}`} alt={`Avatar komunitas ${i}`} width="32" height="32" loading="lazy" />
                 </div>
               ))}
             </div>
@@ -65,10 +65,10 @@ export default function Footer() {
           <p className="opacity-50">BUKAN PRODUK RESMI MINECRAFT. TIDAK TERAFILIASI DENGAN MOJANG AB.</p>
         </div>
         <div className="flex flex-wrap justify-center gap-8">
-          <a href="#" className="hover:text-primary transition-colors">Instagram</a>
-          <a href="#" className="hover:text-primary transition-colors">Twitter</a>
-          <a href="https://discord.gg/altplay" className="hover:text-primary transition-colors">Discord</a>
-          <a href="#" className="hover:text-primary transition-colors">YouTube</a>
+          <a href="#" aria-label="Instagram ALTPLAY" rel="noopener noreferrer" className="hover:text-primary transition-colors">Instagram</a>
+          <a href="#" aria-label="Twitter ALTPLAY" className="hover:text-primary transition-colors" rel="noopener noreferrer">Twitter</a>
+          <a href="https://discord.gg/altplay" aria-label="Discord ALTPLAY" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">Discord</a>
+          <a href="#" aria-label="YouTube ALTPLAY" rel="noopener noreferrer" className="hover:text-primary transition-colors">YouTube</a>
         </div>
       </div>
     </footer>

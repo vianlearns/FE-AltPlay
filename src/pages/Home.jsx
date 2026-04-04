@@ -308,6 +308,8 @@ export default function Home() {
                         loop
                         muted
                         playsInline
+                        width="1920"
+                        height="1080"
                         className="w-full h-auto aspect-video object-cover rounded-b-lg border-t border-white/5 mix-blend-screen opacity-90 object-center"
                         src="/log-animation.webm"
                       ></video>
@@ -405,8 +407,8 @@ export default function Home() {
                   <p className="text-on-surface-variant">Dengerin aja apa kata komunitas kami yang udah nyobain langsung.</p>
                 </div>
                 <div className="hidden md:flex gap-4">
-                  <button className="w-12 h-12 flex items-center justify-center rounded-full border border-white/10 bg-surface-container-high hover:bg-white/10 active:scale-95 transition-all text-on-surface"><span className="material-symbols-outlined text-sm">arrow_back_ios_new</span></button>
-                  <button className="w-12 h-12 flex items-center justify-center rounded-full border border-white/10 bg-surface-container-high hover:bg-white/10 active:scale-95 transition-all text-on-surface"><span className="material-symbols-outlined text-sm">arrow_forward_ios</span></button>
+                  <button aria-label="Testimoni Sebelumnya" className="w-12 h-12 flex items-center justify-center rounded-full border border-white/10 bg-surface-container-high hover:bg-white/10 active:scale-95 transition-all text-on-surface"><span aria-hidden="true" className="material-symbols-outlined text-sm">arrow_back_ios_new</span></button>
+                  <button aria-label="Testimoni Selanjutnya" className="w-12 h-12 flex items-center justify-center rounded-full border border-white/10 bg-surface-container-high hover:bg-white/10 active:scale-95 transition-all text-on-surface"><span aria-hidden="true" className="material-symbols-outlined text-sm">arrow_forward_ios</span></button>
                 </div>
               </div>
             </FadeInScroll>
@@ -423,7 +425,7 @@ export default function Home() {
                   </div>
                   <p className="text-on-surface leading-relaxed italic mb-8 font-body text-sm">"Pindah dari host gede ke ALTPLAY dan perbedaannya kerasa banget. TPS-nya mantap 20 tps stabil, nggak ada lag walaupun pake 50+ mod berat."</p>
                   <div className="flex items-center gap-4 mt-auto">
-                    <img alt="avatar" className="w-10 h-10 rounded-full bg-zinc-800 object-cover" src="/alex_the_builder.webp" />
+                    <img alt="Avatar Alex_The_Builder" width="40" height="40" loading="lazy" className="w-10 h-10 rounded-full bg-zinc-800 object-cover" src="/alex_the_builder.webp" />
                     <div>
                       <div className="font-headline font-bold text-xs uppercase text-on-surface tracking-tight">Alex_The_Builder</div>
                       <div className="text-[10px] text-zinc-500 uppercase tracking-widest mt-0.5">Owner Survival</div>
@@ -443,7 +445,7 @@ export default function Home() {
                   </div>
                   <p className="text-on-surface leading-relaxed italic mb-8 font-body text-sm">"Tim supportnya bener-bener gila. Jam 3 pagi aku mentok masalah plugin Geyser, dan mereka tetep stand by bantuin debug sampe tuntas!"</p>
                   <div className="flex items-center gap-4 mt-auto">
-                    <img alt="avatar" className="w-10 h-10 rounded-full bg-zinc-800 object-cover" src="/creeper_king99.jpg" />
+                    <img alt="Avatar CreeperKing_99" width="40" height="40" loading="lazy" className="w-10 h-10 rounded-full bg-zinc-800 object-cover" src="/creeper_king99.jpg" />
                     <div>
                       <div className="font-headline font-bold text-xs uppercase text-on-surface tracking-tight">CreeperKing_99</div>
                       <div className="text-[10px] text-zinc-500 uppercase tracking-widest mt-0.5">Admin SMP Hardcore</div>
