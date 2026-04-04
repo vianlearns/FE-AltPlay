@@ -18,7 +18,7 @@ export default function Navbar() {
           <a className="text-zinc-400 hover:text-zinc-100 transition-colors font-headline tracking-tight uppercase text-sm" href="/">Beranda</a>
           <a className="text-zinc-400 hover:text-zinc-100 transition-colors font-headline tracking-tight uppercase text-sm" href="/harga">Harga</a>
           <a className="text-zinc-400 hover:text-zinc-100 transition-colors font-headline tracking-tight uppercase text-sm" href="/beli">Deploy</a>
-          <a className="text-zinc-400 hover:text-zinc-100 transition-colors font-headline tracking-tight uppercase text-sm" href="/server">Dashboard</a>
+          <a className="text-zinc-400 hover:text-zinc-100 transition-colors font-headline tracking-tight uppercase text-sm" href="/auth">Client Area</a>
           <a className="text-zinc-400 hover:text-zinc-100 transition-colors font-headline tracking-tight uppercase text-sm" href="/contact">Kontak</a>
         </div>
 
@@ -28,9 +28,9 @@ export default function Navbar() {
             <span className="material-symbols-outlined hover:bg-white/5 p-2 rounded-full cursor-pointer transition-all duration-300 pointer-events-auto">notifications</span>
             <span className="material-symbols-outlined hover:bg-white/5 p-2 rounded-full cursor-pointer transition-all duration-300 pointer-events-auto">settings</span>
           </div>
-          <button className="hidden sm:block bg-gradient-to-r from-primary to-primary-container text-on-primary px-6 py-2.5 font-headline font-bold text-sm tracking-tight uppercase active:scale-95 transition-transform rounded-sm border border-primary-fixed-dim/30 pointer-events-auto">
-            Luncurkan Server
-          </button>
+          <a href="/auth" className="hidden sm:inline-block bg-gradient-to-r from-primary to-primary-container text-on-primary px-6 py-2.5 font-headline font-bold text-sm tracking-tight uppercase active:scale-95 transition-transform rounded-sm border border-primary-fixed-dim/30 pointer-events-auto shadow-[0_0_15px_rgba(0,209,255,0.2)] hover:shadow-[0_0_25px_rgba(0,209,255,0.4)]">
+            Login
+          </a>
           
           {/* Mobile Menu Toggle */}
           <button 
@@ -48,12 +48,12 @@ export default function Navbar() {
           <a onClick={() => setIsMobileMenuOpen(false)} className="text-zinc-300 hover:text-primary transition-colors font-headline tracking-wider uppercase font-bold text-lg w-full py-2" href="/">Beranda</a>
           <a onClick={() => setIsMobileMenuOpen(false)} className="text-zinc-300 hover:text-primary transition-colors font-headline tracking-wider uppercase font-bold text-lg w-full py-2" href="/harga">Harga</a>
           <a onClick={() => setIsMobileMenuOpen(false)} className="text-zinc-300 hover:text-primary transition-colors font-headline tracking-wider uppercase font-bold text-lg w-full py-2" href="/beli">Deploy</a>
-          <a onClick={() => setIsMobileMenuOpen(false)} className="text-zinc-300 hover:text-primary transition-colors font-headline tracking-wider uppercase font-bold text-lg w-full py-2" href="/server">Dashboard</a>
+          <a onClick={() => setIsMobileMenuOpen(false)} className="text-zinc-300 hover:text-primary transition-colors font-headline tracking-wider uppercase font-bold text-lg w-full py-2" href="/auth">Client Area</a>
           <a onClick={() => setIsMobileMenuOpen(false)} className="text-zinc-300 hover:text-primary transition-colors font-headline tracking-wider uppercase font-bold text-lg w-full py-2" href="/contact">Kontak</a>
           <div className="pt-6 border-t border-white/10 w-full">
-            <button className="w-full bg-primary text-on-primary-container px-6 py-4 font-headline font-bold text-sm tracking-widest text-[16px] uppercase active:scale-95 transition-all rounded-lg shadow-[0_0_20px_-5px_rgba(0,209,255,0.4)]">
-              Luncurkan Server Sekarang
-            </button>
+            <a href="/auth" className="w-full block bg-primary text-on-primary-container px-6 py-4 font-headline font-bold text-sm tracking-widest text-[16px] uppercase active:scale-95 transition-all rounded-lg shadow-[0_0_20px_-5px_rgba(0,209,255,0.4)]">
+              Masuk / Daftar
+            </a>
           </div>
         </div>
       </div>

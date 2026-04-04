@@ -4,6 +4,7 @@ import Pricing from './pages/Pricing';
 import Configure from './pages/Configure';
 import ServerDashboard from './pages/ServerDashboard';
 import Contact from './pages/Contact';
+import Auth from './pages/Auth';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/beli" element={<Configure />} />
         <Route path="/server" element={<ServerDashboard />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/auth" element={<Auth />} />
       </Routes>
     </Router>
   );

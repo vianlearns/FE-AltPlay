@@ -1,14 +1,23 @@
 import Layout from '../components/Layout';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export default function Pricing() {
   const [billing, setBilling] = useState('monthly');
   const [addons, setAddons] = useState([false, false, false]);
+  const navigate = useNavigate();
 
   const toggleAddon = (index) => {
     const newAddons = [...addons];
     newAddons[index] = !newAddons[index];
     setAddons(newAddons);
+  };
+
+  const handleSelectNode = (tier) => {
+    const addonLabels = ['backup', 'ip', 'modpack'];
+    const selectedAddons = addonLabels.filter((_, i) => addons[i]).join(',');
+    const url = `/beli?tier=${tier}${selectedAddons ? `&addons=${selectedAddons}` : ''}${billing === 'yearly' ? '&billing=yearly' : ''}`;
+    navigate(url);
   };
 
   const getPrice = (base) => {
@@ -76,7 +85,12 @@ export default function Pricing() {
               <li className="flex items-center gap-3"><span className="material-symbols-outlined text-zinc-600 text-lg">group</span> Sampe 20 Player</li>
               <li className="flex items-center gap-3"><span className="material-symbols-outlined text-zinc-600 text-lg">support_agent</span> Support Standar</li>
             </ul>
-            <a href="/beli" className="w-full py-4 text-center rounded-xl bg-surface-container-high hover:bg-surface-container-highest font-headline font-bold uppercase tracking-wider transition-all active:scale-95">Pilih Iron</a>
+            <button 
+              onClick={() => handleSelectNode('iron')} 
+              className="w-full py-4 text-center rounded-xl bg-surface-container-high hover:bg-surface-container-highest font-headline font-bold uppercase tracking-wider transition-all active:scale-95"
+            >
+              Pilih Iron
+            </button>
           </div>
 
           {/* Pro Tier (Featured) */}
@@ -99,7 +113,12 @@ export default function Pricing() {
               <li className="flex items-center gap-3"><span className="material-symbols-outlined text-primary text-lg">group</span> Slot Unlimited</li>
               <li className="flex items-center gap-3"><span className="material-symbols-outlined text-primary text-lg">security</span> Advanced DDoS Protection</li>
             </ul>
-            <a href="/beli" className="w-full py-4 text-center rounded-xl bg-primary text-on-primary-container font-headline font-black uppercase tracking-wider hover:brightness-110 active:scale-95 transition-all shadow-[0_0_20px_rgba(0,209,255,0.3)]">Buat Sekarang</a>
+            <button 
+              onClick={() => handleSelectNode('diamond')} 
+              className="w-full py-4 text-center rounded-xl bg-primary text-on-primary-container font-headline font-black uppercase tracking-wider hover:brightness-110 active:scale-95 transition-all shadow-[0_0_20px_rgba(0,209,255,0.3)]"
+            >
+              Buat Sekarang
+            </button>
           </div>
 
           {/* Extreme Tier */}
@@ -119,7 +138,12 @@ export default function Pricing() {
               <li className="flex items-center gap-3"><span className="material-symbols-outlined text-secondary-fixed-dim text-lg">network_node</span> Gratis Dedicated IP</li>
               <li className="flex items-center gap-3"><span className="material-symbols-outlined text-secondary-fixed-dim text-lg">support_agent</span> Priority Support 24/7</li>
             </ul>
-            <a href="/beli" className="w-full py-4 text-center rounded-xl border border-secondary-fixed-dim/50 text-secondary-fixed-dim font-headline font-bold uppercase tracking-wider hover:bg-secondary-fixed-dim/10 active:scale-95 transition-all">Pilih Netherite</a>
+            <button 
+              onClick={() => handleSelectNode('netherite')} 
+              className="w-full py-4 text-center rounded-xl border border-secondary-fixed-dim/50 text-secondary-fixed-dim font-headline font-bold uppercase tracking-wider hover:bg-secondary-fixed-dim/10 active:scale-95 transition-all"
+            >
+              Pilih Netherite
+            </button>
           </div>
 
         </div>

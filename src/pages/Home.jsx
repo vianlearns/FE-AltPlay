@@ -125,8 +125,8 @@ export default function Home() {
                 Keluarin semua potensi komunitas kamu bareng ALTPLAY. Hardware enterprise, kernel yang udah di-optimasi, dan panel Pterodactyl terdepan.
               </p>
               <div className="flex gap-4">
-                <a href="/harga" className="bg-primary-container text-on-primary-container px-6 md:px-8 py-4 font-headline font-bold uppercase tracking-wider text-sm active:scale-95 transition-all inline-block text-center border border-primary-container shadow-[0_0_20px_rgba(0,209,255,0.3)] hover:brightness-110">Mulai Sekarang</a>
-                <a href="/harga" className="bg-surface-container-high hover:bg-surface-container-highest px-6 md:px-8 py-4 font-headline font-bold uppercase tracking-wider text-sm border border-outline-variant/30 transition-all inline-block text-center active:scale-95">Lihat Server</a>
+                <a href="/beli" className="bg-primary-container text-on-primary-container px-6 md:px-8 py-4 font-headline font-bold uppercase tracking-wider text-sm active:scale-95 transition-all inline-block text-center border border-primary-container shadow-[0_0_20px_rgba(0,209,255,0.3)] hover:brightness-110">Mulai Sekarang</a>
+                <a href="/harga" className="bg-surface-container-high hover:bg-surface-container-highest px-6 md:px-8 py-4 font-headline font-bold uppercase tracking-wider text-sm border border-outline-variant/30 transition-all inline-block text-center active:scale-95">Lihat Harga</a>
               </div>
             </FadeInScroll>
 
@@ -155,11 +155,11 @@ export default function Home() {
               <p className="text-[10px] uppercase font-bold tracking-[0.2em] text-zinc-500 mb-8">Dipercaya oleh Komunitas & Kreator Top</p>
             </FadeInScroll>
             <div className="flex flex-wrap justify-center items-center gap-x-16 gap-y-8 opacity-40 hover:opacity-100 transition-all duration-500">
-              <FadeInScroll delay={100}><div className="animate-float-slow"><div className="text-2xl font-headline font-black tracking-tighter cursor-default">CREEPER<span className="text-primary">HOST</span></div></div></FadeInScroll>
-              <FadeInScroll delay={200}><div className="animate-float"><div className="text-2xl font-headline font-black tracking-widest cursor-default">MINES<span className="text-secondary-fixed-dim">VERSE</span></div></div></FadeInScroll>
-              <FadeInScroll delay={300}><div className="animate-float-fast"><div className="text-2xl font-headline font-black tracking-tighter italic cursor-default">Void<span className="text-tertiary">Network</span></div></div></FadeInScroll>
-              <FadeInScroll delay={400}><div className="animate-float"><div className="text-2xl font-headline font-bold cursor-default">Pixel<span className="text-primary">Craft</span></div></div></FadeInScroll>
-              <FadeInScroll delay={500}><div className="animate-float-slow"><div className="text-2xl font-headline font-black uppercase tracking-widest cursor-default">Sky<span className="text-zinc-500">Block</span><span className="text-primary">Pro</span></div></div></FadeInScroll>
+              <FadeInScroll delay={100}><div><div className="text-2xl font-headline font-black tracking-tighter cursor-default">CREEPER<span className="text-primary">HOST</span></div></div></FadeInScroll>
+              <FadeInScroll delay={200}><div><div className="text-2xl font-headline font-black tracking-widest cursor-default">MINES<span className="text-secondary-fixed-dim">VERSE</span></div></div></FadeInScroll>
+              <FadeInScroll delay={300}><div><div className="text-2xl font-headline font-black tracking-tighter italic cursor-default">Void<span className="text-tertiary">Network</span></div></div></FadeInScroll>
+              <FadeInScroll delay={400}><div><div className="text-2xl font-headline font-bold cursor-default">Pixel<span className="text-primary">Craft</span></div></div></FadeInScroll>
+              <FadeInScroll delay={500}><div><div className="text-2xl font-headline font-black uppercase tracking-widest cursor-default">Sky<span className="text-zinc-500">Block</span><span className="text-primary">Pro</span></div></div></FadeInScroll>
             </div>
           </div>
         </section>
@@ -172,7 +172,7 @@ export default function Home() {
               <div className="md:w-1/2 grid grid-cols-2 gap-4 relative">
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-primary/10 blur-[100px] rounded-full pointer-events-none"></div>
                 <FadeInScroll delay={0}>
-                  <div className="animate-float-slow">
+                  <div>
                     <div className="bg-surface-container p-8 rounded-xl space-y-4 border border-outline-variant/10 shadow-lg relative glow-hover transition-all duration-500 hover:border-primary/30 group">
                       <div className="w-12 h-12 flex items-center justify-center bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors">
                         <span className="material-symbols-outlined text-primary text-3xl">shield_with_heart</span>
@@ -183,7 +183,7 @@ export default function Home() {
                   </div>
                 </FadeInScroll>
                 <FadeInScroll delay={150}>
-                  <div className="animate-float">
+                  <div>
                     <div className="bg-surface-container p-8 rounded-xl space-y-4 translate-y-8 border border-outline-variant/10 shadow-lg relative glow-hover transition-all duration-500 hover:border-secondary-fixed-dim/30 group">
                       <div className="w-12 h-12 flex items-center justify-center bg-secondary-container/10 rounded-lg group-hover:bg-secondary-container/20 transition-colors">
                         <span className="material-symbols-outlined text-secondary-fixed-dim text-3xl">memory</span>
@@ -194,7 +194,7 @@ export default function Home() {
                   </div>
                 </FadeInScroll>
                 <FadeInScroll delay={300}>
-                  <div className="animate-float-fast">
+                  <div>
                     <div className="bg-surface-container p-8 rounded-xl space-y-4 border border-outline-variant/10 shadow-lg relative glow-hover transition-all duration-500 hover:border-tertiary/30 group">
                       <div className="w-12 h-12 flex items-center justify-center bg-tertiary-container/10 rounded-lg group-hover:bg-tertiary-container/20 transition-colors">
                         <span className="material-symbols-outlined text-tertiary text-3xl">bolt</span>
@@ -205,7 +205,7 @@ export default function Home() {
                   </div>
                 </FadeInScroll>
                 <FadeInScroll delay={450}>
-                  <div className="animate-float-slow">
+                  <div>
                     <div className="bg-surface-container p-8 rounded-xl space-y-4 translate-y-8 border border-outline-variant/10 shadow-lg relative glow-hover transition-all duration-500 hover:border-primary/30 group">
                       <div className="w-12 h-12 flex items-center justify-center bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors">
                         <span className="material-symbols-outlined text-primary text-3xl">rocket_launch</span>
@@ -301,7 +301,7 @@ export default function Home() {
               <div className="md:w-1/2 relative w-full perspective-1000">
                 <div className="absolute inset-20 bg-secondary-fixed-dim/20 blur-[120px] rounded-full pointer-events-none"></div>
                 <FadeInScroll delay={200}>
-                  <div className="animate-float">
+                  <div>
                     <div className="glass-panel p-2 rounded-xl relative border border-white/10 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5)] bg-[#131313]/90 overflow-hidden transform md:rotate-y-[-5deg] transition-transform duration-700">
                       <video
                         autoPlay
@@ -346,7 +346,7 @@ export default function Home() {
                   <li className="flex items-center gap-3"><span className="material-symbols-outlined text-zinc-500 text-[18px]">group</span>Sampe 20 Player</li>
                   <li className="flex items-center gap-3"><span className="material-symbols-outlined text-zinc-500 text-[18px]">support_agent</span>Support Standar</li>
                 </ul>
-                <a href="/harga" className="w-full block text-center py-4 border border-outline-variant/40 hover:bg-white/5 rounded-xl font-headline font-bold uppercase tracking-wider transition-all active:scale-95 text-xs text-on-surface mt-auto">Pilih Iron</a>
+                <a href="/beli?tier=iron" className="w-full block text-center py-4 border border-outline-variant/40 hover:bg-white/5 rounded-xl font-headline font-bold uppercase tracking-wider transition-all active:scale-95 text-xs text-on-surface mt-auto">Pilih Iron</a>
               </div>
             </FadeInScroll>
 
@@ -368,7 +368,7 @@ export default function Home() {
                     <li className="flex items-center gap-3"><span className="material-symbols-outlined text-primary text-[18px]">group</span>Slot Unlimited</li>
                     <li className="flex items-center gap-3"><span className="material-symbols-outlined text-primary text-[18px]">security</span>Advanced DDoS Protection</li>
                   </ul>
-                  <a href="/harga" className="w-full block text-center py-4 bg-primary text-on-primary-container rounded-xl font-headline font-black uppercase tracking-wider transition-all shadow-[0_10px_20px_-5px_rgba(0,209,255,0.3)] hover:brightness-110 active:scale-95 text-xs mt-auto">Pilih Diamond</a>
+                  <a href="/beli?tier=diamond" className="w-full block text-center py-4 bg-primary text-on-primary-container rounded-xl font-headline font-black uppercase tracking-wider transition-all shadow-[0_10px_20px_-5px_rgba(0,209,255,0.3)] hover:brightness-110 active:scale-95 text-xs mt-auto">Pilih Diamond</a>
                 </div>
               </div>
             </FadeInScroll>
@@ -388,7 +388,7 @@ export default function Home() {
                   <li className="flex items-center gap-3"><span className="material-symbols-outlined text-secondary-fixed-dim text-[18px]">network_node</span>Gratis Dedicated IP</li>
                   <li className="flex items-center gap-3"><span className="material-symbols-outlined text-secondary-fixed-dim text-[18px]">support_agent</span>Priority Support 24/7</li>
                 </ul>
-                <a href="/harga" className="w-full block text-center py-4 border border-outline-variant/40 hover:bg-white/5 hover:border-secondary-fixed-dim/50 hover:text-secondary-fixed-dim rounded-xl font-headline font-bold uppercase tracking-wider transition-all active:scale-95 text-xs text-on-surface mt-auto">Pilih Netherite</a>
+                <a href="/beli?tier=netherite" className="w-full block text-center py-4 border border-outline-variant/40 hover:bg-white/5 hover:border-secondary-fixed-dim/50 hover:text-secondary-fixed-dim rounded-xl font-headline font-bold uppercase tracking-wider transition-all active:scale-95 text-xs text-on-surface mt-auto">Pilih Netherite</a>
               </div>
             </FadeInScroll>
           </div>
@@ -476,7 +476,7 @@ export default function Home() {
         </section>
 
         {/* FAQ Area */}
-        <section className="py-24 px-6 md:px-8 border-y border-white/5 relative bg-[#131313]">
+        <section className="py-24 px-6 md:px-8 border-y border-white/5 relative bg-[#131313]" id="faq">
           <div className="absolute top-0 right-1/4 w-64 h-64 bg-primary/5 blur-[120px] rounded-full pointer-events-none"></div>
           <div className="max-w-3xl mx-auto space-y-12 relative z-10">
             <FadeInScroll delay={0}>
