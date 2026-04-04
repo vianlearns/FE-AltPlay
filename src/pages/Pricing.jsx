@@ -1,23 +1,17 @@
 import Layout from '../components/Layout';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import AddonModal from '../components/AddonModal';
 
 export default function Pricing() {
   const [billing, setBilling] = useState('monthly');
-  const [addons, setAddons] = useState([false, false, false]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedTier, setSelectedTier] = useState({ id: '', name: '' });
   const navigate = useNavigate();
 
-  const toggleAddon = (index) => {
-    const newAddons = [...addons];
-    newAddons[index] = !newAddons[index];
-    setAddons(newAddons);
-  };
-
-  const handleSelectNode = (tier) => {
-    const addonLabels = ['backup', 'ip', 'modpack'];
-    const selectedAddons = addonLabels.filter((_, i) => addons[i]).join(',');
-    const url = `/beli?tier=${tier}${selectedAddons ? `&addons=${selectedAddons}` : ''}${billing === 'yearly' ? '&billing=yearly' : ''}`;
-    navigate(url);
+  const handleSelectNode = (id, name) => {
+    setSelectedTier({ id, name });
+    setIsModalOpen(true);
   };
 
   const getPrice = (base) => {
@@ -86,7 +80,7 @@ export default function Pricing() {
               <li className="flex items-center gap-3"><span className="material-symbols-outlined text-zinc-600 text-lg">support_agent</span> Support Standar</li>
             </ul>
             <button 
-              onClick={() => handleSelectNode('iron')} 
+              onClick={() => handleSelectNode('iron', 'Iron Node')} 
               className="w-full py-4 text-center rounded-xl bg-surface-container-high hover:bg-surface-container-highest font-headline font-bold uppercase tracking-wider transition-all active:scale-95"
             >
               Pilih Iron
@@ -114,7 +108,7 @@ export default function Pricing() {
               <li className="flex items-center gap-3"><span className="material-symbols-outlined text-primary text-lg">security</span> Advanced DDoS Protection</li>
             </ul>
             <button 
-              onClick={() => handleSelectNode('diamond')} 
+              onClick={() => handleSelectNode('diamond', 'Diamond Node')} 
               className="w-full py-4 text-center rounded-xl bg-primary text-on-primary-container font-headline font-black uppercase tracking-wider hover:brightness-110 active:scale-95 transition-all shadow-[0_0_20px_rgba(0,209,255,0.3)]"
             >
               Buat Sekarang
@@ -139,7 +133,7 @@ export default function Pricing() {
               <li className="flex items-center gap-3"><span className="material-symbols-outlined text-secondary-fixed-dim text-lg">support_agent</span> Priority Support 24/7</li>
             </ul>
             <button 
-              onClick={() => handleSelectNode('netherite')} 
+              onClick={() => handleSelectNode('netherite', 'Netherite Node')} 
               className="w-full py-4 text-center rounded-xl border border-secondary-fixed-dim/50 text-secondary-fixed-dim font-headline font-bold uppercase tracking-wider hover:bg-secondary-fixed-dim/10 active:scale-95 transition-all"
             >
               Pilih Netherite
@@ -148,45 +142,13 @@ export default function Pricing() {
 
         </div>
 
-        {/* Add-ons Section */}
-        <section className="mt-20">
-          <h2 className="text-3xl font-headline font-black tracking-tighter uppercase mb-8 text-center text-on-surface">Add-ons Opsional</h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
-            {/* Addon 1 */}
-            <div onClick={() => toggleAddon(0)} className={`p-6 rounded-xl border flex items-start gap-4 transition-all cursor-pointer group select-none ${addons[0] ? 'bg-surface-container border-primary/50 shadow-[0_0_20px_rgba(0,209,255,0.1)]' : 'bg-surface-container-low border-white/5 hover:bg-surface-container hover:border-primary/20'}`}>
-              <div className="mt-1 relative">
-                <input readOnly checked={addons[0]} type="checkbox" className="w-5 h-5 rounded border-white/10 bg-surface-container-highest text-primary focus:ring-primary/50 cursor-pointer pointer-events-none" />
-              </div>
-              <div className="flex-grow">
-                <h4 className="font-headline font-bold text-on-surface group-hover:text-primary transition-colors">Daily Auto Backup</h4>
-                <p className="text-xs text-on-surface-variant mt-1 leading-relaxed">Backup off-site buat 7 hari berturut-turut.</p>
-              </div>
-              <div className="text-primary font-bold text-sm whitespace-nowrap">Rp 45.000<span className="text-[10px] text-zinc-500">/bln</span></div>
-            </div>
-            {/* Addon 2 */}
-            <div onClick={() => toggleAddon(1)} className={`p-6 rounded-xl border flex items-start gap-4 transition-all cursor-pointer group select-none ${addons[1] ? 'bg-surface-container border-primary/50 shadow-[0_0_20px_rgba(0,209,255,0.1)]' : 'bg-surface-container-low border-white/5 hover:bg-surface-container hover:border-primary/20'}`}>
-              <div className="mt-1 relative">
-                <input readOnly checked={addons[1]} type="checkbox" className="w-5 h-5 rounded border-white/10 bg-surface-container-highest text-primary focus:ring-primary/50 cursor-pointer pointer-events-none" />
-              </div>
-              <div className="flex-grow">
-                <h4 className="font-headline font-bold text-on-surface group-hover:text-primary transition-colors">Dedicated IP</h4>
-                <p className="text-xs text-on-surface-variant mt-1 leading-relaxed">Dapet port default 25565. Wajib buat network BungeeCord gede.</p>
-              </div>
-              <div className="text-primary font-bold text-sm whitespace-nowrap">Rp 75.000<span className="text-[10px] text-zinc-500">/bln</span></div>
-            </div>
-            {/* Addon 3 */}
-            <div onClick={() => toggleAddon(2)} className={`p-6 rounded-xl border flex items-start gap-4 transition-all cursor-pointer group select-none ${addons[2] ? 'bg-surface-container border-primary/50 shadow-[0_0_20px_rgba(0,209,255,0.1)]' : 'bg-surface-container-low border-white/5 hover:bg-surface-container hover:border-primary/20'}`}>
-              <div className="mt-1 relative">
-                <input readOnly checked={addons[2]} type="checkbox" className="w-5 h-5 rounded border-white/10 bg-surface-container-highest text-primary focus:ring-primary/50 cursor-pointer pointer-events-none" />
-              </div>
-              <div className="flex-grow">
-                <h4 className="font-headline font-bold text-on-surface group-hover:text-primary transition-colors">Modpack Manager</h4>
-                <p className="text-xs text-on-surface-variant mt-1 leading-relaxed">Install dan update modpack CurseForge cuma sekali klik.</p>
-              </div>
-              <div className="text-primary font-bold text-sm whitespace-nowrap">Rp 25.000<span className="text-[10px] text-zinc-500">/bln</span></div>
-            </div>
-          </div>
-        </section>
+        <AddonModal 
+          isOpen={isModalOpen} 
+          onClose={() => setIsModalOpen(false)} 
+          tierId={selectedTier.id} 
+          tierName={selectedTier.name} 
+          billing={billing}
+        />
       </div>
     </Layout>
   );

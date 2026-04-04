@@ -2,6 +2,8 @@ import Layout from '../components/Layout';
 import { useState, useEffect, useRef, Suspense } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { useGLTF, useAnimations, Environment, Float, ContactShadows } from '@react-three/drei';
+import { useNavigate } from 'react-router-dom';
+import AddonModal from '../components/AddonModal';
 import * as THREE from 'three';
 
 // Animasi Fade In Scroll ala Apple
@@ -108,6 +110,15 @@ const FaqItem = ({ question, answer }) => {
 };
 
 export default function Home() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedTier, setSelectedTier] = useState({ id: '', name: '' });
+  const navigate = useNavigate();
+
+  const handleSelectNode = (id, name) => {
+    setSelectedTier({ id, name });
+    setIsModalOpen(true);
+  };
+
   return (
     <Layout>
       <div className="relative">
@@ -348,7 +359,12 @@ export default function Home() {
                   <li className="flex items-center gap-3"><span className="material-symbols-outlined text-zinc-500 text-[18px]">group</span>Sampe 20 Player</li>
                   <li className="flex items-center gap-3"><span className="material-symbols-outlined text-zinc-500 text-[18px]">support_agent</span>Support Standar</li>
                 </ul>
-                <a href="/beli?tier=iron" className="w-full block text-center py-4 border border-outline-variant/40 hover:bg-white/5 rounded-xl font-headline font-bold uppercase tracking-wider transition-all active:scale-95 text-xs text-on-surface mt-auto">Pilih Iron</a>
+                <button 
+                  onClick={() => handleSelectNode('iron', 'Iron Node')}
+                  className="w-full block text-center py-4 border border-outline-variant/40 hover:bg-white/5 rounded-xl font-headline font-bold uppercase tracking-wider transition-all active:scale-95 text-xs text-on-surface mt-auto"
+                >
+                  Pilih Iron
+                </button>
               </div>
             </FadeInScroll>
 
@@ -370,7 +386,12 @@ export default function Home() {
                     <li className="flex items-center gap-3"><span className="material-symbols-outlined text-primary text-[18px]">group</span>Slot Unlimited</li>
                     <li className="flex items-center gap-3"><span className="material-symbols-outlined text-primary text-[18px]">security</span>Advanced DDoS Protection</li>
                   </ul>
-                  <a href="/beli?tier=diamond" className="w-full block text-center py-4 bg-primary text-on-primary-container rounded-xl font-headline font-black uppercase tracking-wider transition-all shadow-[0_10px_20px_-5px_rgba(0,209,255,0.3)] hover:brightness-110 active:scale-95 text-xs mt-auto">Pilih Diamond</a>
+                  <button 
+                    onClick={() => handleSelectNode('diamond', 'Diamond Node')}
+                    className="w-full block text-center py-4 bg-primary text-on-primary-container rounded-xl font-headline font-black uppercase tracking-wider transition-all shadow-[0_10px_20px_-5px_rgba(0,209,255,0.3)] hover:brightness-110 active:scale-95 text-xs mt-auto"
+                  >
+                    Pilih Diamond
+                  </button>
                 </div>
               </div>
             </FadeInScroll>
@@ -390,7 +411,12 @@ export default function Home() {
                   <li className="flex items-center gap-3"><span className="material-symbols-outlined text-secondary-fixed-dim text-[18px]">network_node</span>Gratis Dedicated IP</li>
                   <li className="flex items-center gap-3"><span className="material-symbols-outlined text-secondary-fixed-dim text-[18px]">support_agent</span>Priority Support 24/7</li>
                 </ul>
-                <a href="/beli?tier=netherite" className="w-full block text-center py-4 border border-outline-variant/40 hover:bg-white/5 hover:border-secondary-fixed-dim/50 hover:text-secondary-fixed-dim rounded-xl font-headline font-bold uppercase tracking-wider transition-all active:scale-95 text-xs text-on-surface mt-auto">Pilih Netherite</a>
+                <button 
+                  onClick={() => handleSelectNode('netherite', 'Netherite Node')}
+                  className="w-full block text-center py-4 border border-outline-variant/40 hover:bg-white/5 hover:border-secondary-fixed-dim/50 hover:text-secondary-fixed-dim rounded-xl font-headline font-bold uppercase tracking-wider transition-all active:scale-95 text-xs text-on-surface mt-auto"
+                >
+                  Pilih Netherite
+                </button>
               </div>
             </FadeInScroll>
           </div>
@@ -524,6 +550,13 @@ export default function Home() {
           <div className="absolute top-1/2 left-0 -translate-y-1/2 w-[500px] h-[500px] bg-primary/10 blur-[130px] rounded-full pointer-events-none"></div>
           <div className="absolute top-1/2 right-0 -translate-y-1/2 w-[500px] h-[500px] bg-secondary-container/10 blur-[130px] rounded-full pointer-events-none"></div>
         </section>
+
+        <AddonModal 
+          isOpen={isModalOpen} 
+          onClose={() => setIsModalOpen(false)} 
+          tierId={selectedTier.id} 
+          tierName={selectedTier.name} 
+        />
       </div>
     </Layout>
   );
