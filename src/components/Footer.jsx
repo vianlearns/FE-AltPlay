@@ -48,7 +48,7 @@ export default function Footer() {
             <ul className="space-y-3 text-sm text-zinc-400 font-body">
               <li className="flex items-center gap-3">
                 <span className="material-symbols-outlined text-[18px] text-primary">mail</span>
-                <span>support@altplay.io</span>
+                <span>support@altplay.store</span>
               </li>
               <li className="flex items-center gap-3">
                 <span className="material-symbols-outlined text-[18px] text-primary">location_on</span>

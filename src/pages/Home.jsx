@@ -80,6 +80,65 @@ const faqs = [
   { q: "Bagaimana sistem backup servernya?", a: "Panel kami memiliki fitur auto-backup ke cloud storage internal setiap jam 3 pagi secara gratis. Kamu juga bisa melakukan backup manual 1-klik." },
 ];
 
+const testimonials = [
+  {
+    name: "Alex_The_Builder",
+    role: "Owner Survival",
+    quote: "Pindah dari host gede ke ALTPLAY dan perbedaannya kerasa banget. TPS-nya mantap 20 tps stabil, nggak ada lag walaupun pake 50+ mod berat.",
+    rating: 5,
+    avatar: "/alex_the_builder.webp",
+    color: "primary"
+  },
+  {
+    name: "CreeperKing_99",
+    role: "Admin SMP Hardcore",
+    quote: "Tim supportnya bener-bener gila. Jam 3 pagi aku mentok masalah plugin Geyser, dan mereka tetap stand by bantuin debug sampe tuntas!",
+    rating: 5,
+    avatar: "/creeper_king99.jpg",
+    color: "secondary-fixed-dim"
+  },
+  {
+    name: "SolarNexus_x",
+    role: "Streamer Twitch",
+    quote: "ALTPLAY udah jadi rumah buat komunitas klandestin kami. Panel Pterodactyl-nya kenceng, UI-nya keren dark mode, dan harganya jujur banget.",
+    rating: 4.5,
+    avatar: "/solar_nexus.webp",
+    color: "tertiary"
+  },
+  {
+    name: "Rian_Frost",
+    role: "Plugin Developer",
+    quote: "Panelnya responsif banget, fitur auto-backup-nya udah nyelametin world survival aku berkali-kali dari corrupt. Best value for money!",
+    rating: 5,
+    avatar: "https://api.dicebear.com/7.x/pixel-art/svg?seed=Rian",
+    color: "primary"
+  },
+  {
+    name: "MC_Java_Master",
+    role: "Network Admin",
+    quote: "Nyobain Netherite Node buat server network mini, beneran nggak ada lag. i9-14900K-nya nendang banget buat chunk loading cepat.",
+    rating: 5,
+    avatar: "https://api.dicebear.com/7.x/pixel-art/svg?seed=Java",
+    color: "secondary-fixed-dim"
+  },
+  {
+    name: "CraftyLina",
+    role: "Community Lead",
+    quote: "Suka banget sama tampilannya yang clean. Setting Geyser buat temen-temen di HP juga gampang banget, tinggal klik doang!",
+    rating: 5,
+    avatar: "https://api.dicebear.com/7.x/pixel-art/svg?seed=Lina",
+    color: "tertiary"
+  },
+  {
+    name: "EnderDragon_YT",
+    role: "Content Creator",
+    quote: "Udah ganti-ganti host 5 kali tahun ini, akhirnya nemu yang pas. Latensinya stabil banget buat stream di Jakarta.",
+    rating: 4.5,
+    avatar: "https://api.dicebear.com/7.x/pixel-art/svg?seed=Ender",
+    color: "primary"
+  }
+];
+
 const FaqItem = ({ question, answer }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -112,7 +171,16 @@ const FaqItem = ({ question, answer }) => {
 export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedTier, setSelectedTier] = useState({ id: '', name: '' });
+  const [testimonialIndex, setTestimonialIndex] = useState(0);
   const navigate = useNavigate();
+
+  const nextTestimonial = () => {
+    setTestimonialIndex((prev) => (prev + 1) % (testimonials.length - 2));
+  };
+
+  const prevTestimonial = () => {
+    setTestimonialIndex((prev) => (prev - 1 + (testimonials.length - 2)) % (testimonials.length - 2));
+  };
 
   const handleSelectNode = (id, name) => {
     setSelectedTier({ id, name });
@@ -433,72 +501,58 @@ export default function Home() {
                   <p className="text-on-surface-variant">Dengerin aja apa kata komunitas kami yang udah nyobain langsung.</p>
                 </div>
                 <div className="hidden md:flex gap-4">
-                  <button aria-label="Testimoni Sebelumnya" className="w-12 h-12 flex items-center justify-center rounded-full border border-white/10 bg-surface-container-high hover:bg-white/10 active:scale-95 transition-all text-on-surface"><span aria-hidden="true" className="material-symbols-outlined text-sm">arrow_back_ios_new</span></button>
-                  <button aria-label="Testimoni Selanjutnya" className="w-12 h-12 flex items-center justify-center rounded-full border border-white/10 bg-surface-container-high hover:bg-white/10 active:scale-95 transition-all text-on-surface"><span aria-hidden="true" className="material-symbols-outlined text-sm">arrow_forward_ios</span></button>
+                  <button 
+                    onClick={prevTestimonial}
+                    aria-label="Testimoni Sebelumnya" 
+                    className="w-12 h-12 flex items-center justify-center rounded-full border border-white/10 bg-surface-container-high hover:bg-white/10 active:scale-95 transition-all text-on-surface"
+                  >
+                    <span aria-hidden="true" className="material-symbols-outlined text-sm">arrow_back_ios_new</span>
+                  </button>
+                  <button 
+                    onClick={nextTestimonial}
+                    aria-label="Testimoni Selanjutnya" 
+                    className="w-12 h-12 flex items-center justify-center rounded-full border border-white/10 bg-surface-container-high hover:bg-white/10 active:scale-95 transition-all text-on-surface"
+                  >
+                    <span aria-hidden="true" className="material-symbols-outlined text-sm">arrow_forward_ios</span>
+                  </button>
                 </div>
               </div>
             </FadeInScroll>
 
-            <div className="grid md:grid-cols-3 gap-6">
-              <FadeInScroll delay={100}>
-                <div className="bg-surface-container-low p-8 rounded-2xl border border-white/5 hover:border-primary/20 transition-colors h-full flex flex-col">
-                  <div className="flex gap-1 text-primary mb-6">
-                    <span className="material-symbols-outlined text-[18px]" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
-                    <span className="material-symbols-outlined text-[18px]" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
-                    <span className="material-symbols-outlined text-[18px]" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
-                    <span className="material-symbols-outlined text-[18px]" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
-                    <span className="material-symbols-outlined text-[18px]" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
-                  </div>
-                  <p className="text-on-surface leading-relaxed italic mb-8 font-body text-sm">"Pindah dari host gede ke ALTPLAY dan perbedaannya kerasa banget. TPS-nya mantap 20 tps stabil, nggak ada lag walaupun pake 50+ mod berat."</p>
-                  <div className="flex items-center gap-4 mt-auto">
-                    <img alt="Avatar Alex_The_Builder" width="40" height="40" loading="lazy" className="w-10 h-10 rounded-full bg-zinc-800 object-cover" src="/alex_the_builder.webp" />
-                    <div>
-                      <div className="font-headline font-bold text-xs uppercase text-on-surface tracking-tight">Alex_The_Builder</div>
-                      <div className="text-[10px] text-zinc-500 uppercase tracking-widest mt-0.5">Owner Survival</div>
+            <div className="relative overflow-hidden">
+              <div 
+                className="grid md:grid-cols-3 gap-6 transition-all duration-500 ease-in-out"
+                style={{ transform: `translateX(0)` }}
+              >
+                {testimonials.slice(testimonialIndex, testimonialIndex + 3).map((item, idx) => (
+                  <FadeInScroll key={item.name + idx} delay={idx * 150} className="h-full">
+                    <div className={`bg-surface-container-low p-8 rounded-2xl border border-white/5 hover:border-${item.color}/20 transition-all duration-500 h-full flex flex-col group`}>
+                      <div className={`flex gap-1 text-${item.color} mb-6`}>
+                        {[...Array(5)].map((_, i) => (
+                          <span key={i} className="material-symbols-outlined text-[18px]" style={{ fontVariationSettings: `'FILL' ${i < Math.floor(item.rating) ? 1 : 0}` }}>
+                            {i < Math.floor(item.rating) ? 'star' : (item.rating % 1 !== 0 && i === Math.floor(item.rating) ? 'star_half' : 'star')}
+                          </span>
+                        ))}
+                      </div>
+                      <p className="text-on-surface leading-relaxed italic mb-8 font-body text-sm flex-grow">"{item.quote}"</p>
+                      <div className="flex items-center gap-4">
+                        <img 
+                          alt={`Avatar ${item.name}`} 
+                          width="40" 
+                          height="40" 
+                          loading="lazy" 
+                          className="w-10 h-10 rounded-full bg-zinc-800 object-cover border border-white/10" 
+                          src={item.avatar} 
+                        />
+                        <div>
+                          <div className="font-headline font-bold text-xs uppercase text-on-surface tracking-tight group-hover:text-primary transition-colors">{item.name}</div>
+                          <div className="text-[10px] text-zinc-500 uppercase tracking-widest mt-0.5">{item.role}</div>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
-              </FadeInScroll>
-
-              <FadeInScroll delay={250}>
-                <div className="bg-surface-container-low p-8 rounded-2xl border border-white/5 hover:border-secondary-fixed-dim/20 transition-colors h-full flex flex-col">
-                  <div className="flex gap-1 text-secondary-fixed-dim mb-6">
-                    <span className="material-symbols-outlined text-[18px]" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
-                    <span className="material-symbols-outlined text-[18px]" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
-                    <span className="material-symbols-outlined text-[18px]" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
-                    <span className="material-symbols-outlined text-[18px]" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
-                    <span className="material-symbols-outlined text-[18px]" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
-                  </div>
-                  <p className="text-on-surface leading-relaxed italic mb-8 font-body text-sm">"Tim supportnya bener-bener gila. Jam 3 pagi aku mentok masalah plugin Geyser, dan mereka tetep stand by bantuin debug sampe tuntas!"</p>
-                  <div className="flex items-center gap-4 mt-auto">
-                    <img alt="Avatar CreeperKing_99" width="40" height="40" loading="lazy" className="w-10 h-10 rounded-full bg-zinc-800 object-cover" src="/creeper_king99.jpg" />
-                    <div>
-                      <div className="font-headline font-bold text-xs uppercase text-on-surface tracking-tight">CreeperKing_99</div>
-                      <div className="text-[10px] text-zinc-500 uppercase tracking-widest mt-0.5">Admin SMP Hardcore</div>
-                    </div>
-                  </div>
-                </div>
-              </FadeInScroll>
-
-              <FadeInScroll delay={400}>
-                <div className="bg-surface-container-low p-8 rounded-2xl border border-white/5 hover:border-tertiary/20 transition-colors h-full flex flex-col">
-                  <div className="flex gap-1 text-tertiary mb-6">
-                    <span className="material-symbols-outlined text-[18px]" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
-                    <span className="material-symbols-outlined text-[18px]" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
-                    <span className="material-symbols-outlined text-[18px]" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
-                    <span className="material-symbols-outlined text-[18px]" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
-                    <span className="material-symbols-outlined text-[18px]" style={{ fontVariationSettings: "'FILL' 1" }}>star_half</span>
-                  </div>
-                  <p className="text-on-surface leading-relaxed italic mb-8 font-body text-sm">"ALTPLAY udah jadi rumah buat komunitas klandestin kami. Panel Pterodactyl-nya kenceng, UI-nya keren dark mode, dan harganya jujur banget nggak berbelit."</p>
-                  <div className="flex items-center gap-4 mt-auto">
-                    <img alt="avatar" className="w-10 h-10 rounded-full bg-zinc-800 object-cover" src="/solar_nexus.webp" />
-                    <div>
-                      <div className="font-headline font-bold text-xs uppercase text-on-surface tracking-tight">SolarNexus_x</div>
-                      <div className="text-[10px] text-zinc-500 uppercase tracking-widest mt-0.5">Streamer Twitch</div>
-                    </div>
-                  </div>
-                </div>
-              </FadeInScroll>
+                  </FadeInScroll>
+                ))}
+              </div>
             </div>
           </div>
         </section>
