@@ -31,7 +31,7 @@ export default function Auth() {
             <div className="absolute bottom-0 left-0 w-64 h-64 bg-secondary-fixed-dim/20 blur-[80px] rounded-full mix-blend-screen pointer-events-none"></div>
 
             <a href="/" className="flex items-center gap-2 mb-auto z-10 w-max">
-              <img src="/ALTPLAY-logo.png" alt="ALTPLAY" className="h-6 w-auto brightness-0 invert" />
+              <img src="/ALTPLAY-logo.webp" alt="ALTPLAY" className="h-6 w-auto brightness-0 invert" />
               <span className="font-headline font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-cyan-400">ALTPLAY</span>
             </a>
 

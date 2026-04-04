@@ -4,7 +4,7 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto flex flex-col lg:flex-row justify-between items-start gap-12 lg:gap-20">
         <div className="space-y-6 max-w-sm w-full">
           <div className="flex items-center gap-3">
-            <img src="/ALTPLAY-logo.png" alt="ALTPLAY Logo" width="32" height="32" className="h-8 w-auto brightness-0 invert" />
+            <img src="/ALTPLAY-logo.webp" alt="ALTPLAY Logo" width="32" height="32" className="h-8 w-auto brightness-0 invert" />
             <div className="text-2xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-cyan-400 font-headline uppercase">
               ALTPLAY
             </div>
