@@ -62,19 +62,32 @@ const addonOptions = [
   { id: 'modpack', name: 'Modpack Manager', desc: 'Instal modpack CurseForge mudah.', price: 25000 }
 ];
 
+const CACHE_KEY = 'altplay_config_cache';
+
 export default function Configure() {
   const [searchParams] = useSearchParams();
+
+  // Helper to load from localStorage
+  const getCache = () => {
+    const cached = localStorage.getItem(CACHE_KEY);
+    return cached ? JSON.parse(cached) : null;
+  };
+
+  const cache = getCache();
+
   const [step, setStep] = useState(() => {
     const s = searchParams.get('step');
-    return s ? parseInt(s) : 1;
+    if (s) return parseInt(s);
+    return cache?.step || 1;
   });
-  const [selectedNode, setSelectedNode] = useState('diamond');
-  const [env, setEnv] = useState('Java');
-  const [version, setVersion] = useState('Minecraft 1.21.1 (Terbaru)');
-  const [region, setRegion] = useState('Jakarta (ID)');
-  const [addons, setAddons] = useState({ backup: false, ip: false, modpack: false });
-  const [billingCycle, setBillingCycle] = useState(1); // 1, 3, 6, 12 months
-  const [promoCode, setPromoCode] = useState('');
+
+  const [selectedNode, setSelectedNode] = useState(() => cache?.selectedNode || 'diamond');
+  const [env, setEnv] = useState(() => cache?.env || 'Java');
+  const [version, setVersion] = useState(() => cache?.version || 'Minecraft 1.21.1 (Terbaru)');
+  const [region, setRegion] = useState(() => cache?.region || 'Jakarta (ID)');
+  const [addons, setAddons] = useState(() => cache?.addons || { backup: false, ip: false, modpack: false });
+  const [billingCycle, setBillingCycle] = useState(() => cache?.billingCycle || 1);
+  const [promoCode, setPromoCode] = useState(() => cache?.promoCode || '');
   const [isDeploying, setIsDeploying] = useState(false);
 
   useEffect(() => {
@@ -99,7 +112,27 @@ export default function Configure() {
     if (billing === 'yearly') {
       setBillingCycle(12);
     }
+
+    // Clear URL parameters after initial parse to avoid re-triggering on refresh
+    if (tier || addonsList || billing || searchParams.get('step')) {
+      window.history.replaceState({}, '', window.location.pathname);
+    }
   }, [searchParams]);
+
+  // Persist State to LocalStorage
+  useEffect(() => {
+    const configToCache = {
+      step,
+      selectedNode,
+      env,
+      version,
+      region,
+      addons,
+      billingCycle,
+      promoCode
+    };
+    localStorage.setItem(CACHE_KEY, JSON.stringify(configToCache));
+  }, [step, selectedNode, env, version, region, addons, billingCycle, promoCode]);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -148,6 +181,7 @@ export default function Configure() {
 
     setIsDeploying(true);
     setTimeout(() => {
+      localStorage.removeItem(CACHE_KEY); // Clear cache on success
       window.location.href = '/server';
     }, 2000);
   };
@@ -177,9 +211,16 @@ export default function Configure() {
             <ul className="flex items-center justify-between w-full relative">
               {[1, 2, 3, 4].map((num) => (
                 <li key={num} className={`flex items-center ${num !== 4 ? 'w-full' : ''}`}>
-                  <div className="relative flex flex-col items-center group cursor-pointer" onClick={() => { if (num < step) setStep(num); }}>
-                    <div className={`w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center font-bold text-sm md:text-base border transition-all duration-300 z-10 relative ${getStepStatus(num)}`}>
-                      {step > num ? <span className="material-symbols-outlined text-[18px]">check</span> : num}
+                  <div 
+                    className="relative flex flex-col items-center group cursor-pointer" 
+                    onClick={() => setStep(num)}
+                  >
+                    <div className={`w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center font-bold text-sm md:text-base border transition-all duration-300 z-10 relative ${getStepStatus(num)} group-hover:border-primary/50`}>
+                      {num === 4 ? (
+                        <span className="material-symbols-outlined text-[18px]">shopping_cart_checkout</span>
+                      ) : (
+                        step > num ? <span className="material-symbols-outlined text-[18px]">check</span> : num
+                      )}
                     </div>
                     <span className={`absolute top-12 text-[9px] md:text-[10px] font-bold uppercase tracking-widest hidden sm:block whitespace-nowrap ${step === num ? 'text-on-surface' : 'text-zinc-600'}`}>
                       {num === 1 ? 'Mesin & Addons' : num === 2 ? 'Environment' : num === 3 ? 'Lokasi' : 'Konfirmasi'}
