@@ -20,7 +20,7 @@ export default function Footer() {
                 </div>
               ))}
             </div>
-            <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Dipercaya 500+ Server Owner</span>
+            <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Dipercaya 500+ Server Owner</span>
           </div>
         </div>
 
@@ -59,10 +59,10 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto mt-20 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6 text-[10px] font-bold text-zinc-600 uppercase tracking-[0.2em] text-center md:text-left">
+      <div className="max-w-7xl mx-auto mt-20 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6 text-[10px] font-bold text-zinc-400 uppercase tracking-[0.2em] text-center md:text-left">
         <div className="space-y-1">
           <p>© 2026 ALTPLAY HOSTING. ALL RIGHTS RESERVED.</p>
-          <p className="opacity-50">BUKAN PRODUK RESMI MINECRAFT. TIDAK TERAFILIASI DENGAN MOJANG AB.</p>
+          <p className="text-zinc-500 font-medium">BUKAN PRODUK RESMI MINECRAFT. TIDAK TERAFILIASI DENGAN MOJANG AB.</p>
         </div>
         <div className="flex flex-wrap justify-center gap-8">
           <a href="#" aria-label="Instagram ALTPLAY" rel="noopener noreferrer" className="hover:text-primary transition-colors">Instagram</a>

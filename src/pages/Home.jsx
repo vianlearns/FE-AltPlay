@@ -108,6 +108,15 @@ const FaqItem = ({ question, answer }) => {
 };
 
 export default function Home() {
+  const [load3D, setLoad3D] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoad3D(true);
+    }, 1500);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <Layout>
       <div className="relative">
@@ -138,11 +147,13 @@ export default function Home() {
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 md:w-96 md:h-96 bg-primary/20 blur-[130px] rounded-full pointer-events-none"></div>
 
                 {/* 3D Context Boundary */}
-                <Canvas camera={{ position: [0, 0, 7.5], fov: 45 }} className="w-full h-full z-10 block pointer-events-none">
-                  <Suspense fallback={null}>
-                    <GhastModel />
-                  </Suspense>
-                </Canvas>
+                {load3D && (
+                  <Canvas camera={{ position: [0, 0, 7.5], fov: 45 }} className="w-full h-full z-10 block pointer-events-none transition-opacity duration-1000 animate-fade-in text-transparent">
+                    <Suspense fallback={null}>
+                      <GhastModel />
+                    </Suspense>
+                  </Canvas>
+                )}
               </div>
             </FadeInScroll>
           </div>
@@ -310,6 +321,7 @@ export default function Home() {
                         playsInline
                         width="1920"
                         height="1080"
+                        aria-hidden="true"
                         className="w-full h-auto aspect-video object-cover rounded-b-lg border-t border-white/5 mix-blend-screen opacity-90 object-center"
                         src="/log-animation.webm"
                       ></video>
